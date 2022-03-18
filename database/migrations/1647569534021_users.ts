@@ -9,17 +9,17 @@ export default class UsersSchema extends BaseSchema {
       this.schema.createTable(this.tableName, (table) => {
         table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
 
-        table.string('firstname', 80).notNullable()
-        table.string('lastname', 80).notNullable()
+        table.string('first_name', 80).notNullable()
+        table.string('last_name', 80).notNullable()
         table.string('username', 80).notNullable()
         table.string('email', 255).notNullable()
         table.string('password', 180).notNullable()
 
         table.string('remember_me_token').nullable()
 
-        table.boolean('is_online').defaultTo(false).notNullable()
-        table.boolean('is_blocked').defaultTo(false).notNullable()
-        table.boolean('is_deleted').defaultTo(false).notNullable()
+        table.boolean('is_online').notNullable().defaultTo(false)
+        table.boolean('is_blocked').notNullable().defaultTo(false)
+        table.boolean('is_deleted').notNullable().defaultTo(false)
 
         table.timestamp('created_at', { useTz: true }).notNullable()
         table.timestamp('updated_at', { useTz: true }).notNullable()

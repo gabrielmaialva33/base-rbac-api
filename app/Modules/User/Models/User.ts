@@ -13,10 +13,10 @@ export default class User extends BaseModel {
   public id: string
 
   @column()
-  public firstname: string
+  public first_name: string
 
   @column()
-  public lastname: string
+  public last_name: string
 
   @column()
   public username: string
