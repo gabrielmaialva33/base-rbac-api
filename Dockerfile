@@ -27,4 +27,4 @@ RUN rm -rf node_modules && yarn install --frozen-lockfile --production
 # Expose port to outside world
 EXPOSE 3333
 # Start server up
-CMD [ "yarn", "db:server" ]
+CMD [ "yarn", "docker:server" ]

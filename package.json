@@ -7,7 +7,9 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:reset": "node ace migration:rollback && node ace migration:run && node ace db:seed",
+    "docker:server": "node ace migration:run && node ace db:seed && node server.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.4.2",
