@@ -1,13 +1,10 @@
-import { BaseInterface } from 'App/Shared/Interfaces/BaseInterface'
-import { TestTypeModel } from 'App/Shared/Models/BaseCustomModel'
-import { ModelAttributes } from '@ioc:Adonis/Lucid/Orm'
+import { BaseInterface, ModelTypes } from 'App/Shared/Interfaces/BaseInterface'
+import { BaseTypeModel } from 'App/Shared/Models/BaseCustomModel'
 
-export default class BaseRepository<Model extends TestTypeModel> implements BaseInterface<Model> {
+export default class BaseRepository<Model extends BaseTypeModel> implements BaseInterface<Model> {
   constructor(protected model: Model) {}
 
-  public async create<T extends Model>(
-    values: Partial<ModelAttributes<InstanceType<T>>>
-  ): Promise<InstanceType<T>> {
+  public async store<T extends Model>(values: ModelTypes<T>): Promise<InstanceType<T>> {
     return this.model.create(values)
   }
 }

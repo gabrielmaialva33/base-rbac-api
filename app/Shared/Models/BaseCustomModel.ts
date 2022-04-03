@@ -1,5 +1,5 @@
-import { BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel as BaseAdonisModel } from '@ioc:Adonis/Lucid/Orm'
 
-export type TestTypeModel = typeof BaseCustomModel
+export class BaseModel extends BaseAdonisModel {}
 
-export class BaseCustomModel extends BaseModel {}
+export type BaseTypeModel = typeof BaseModel

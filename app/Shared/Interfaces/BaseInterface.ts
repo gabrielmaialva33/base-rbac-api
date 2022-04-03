@@ -1,8 +1,22 @@
-import { TestTypeModel } from 'App/Shared/Models/BaseCustomModel'
 import { ModelAttributes } from '@ioc:Adonis/Lucid/Orm'
+import { BaseTypeModel } from 'App/Shared/Models/BaseCustomModel'
 
-export interface BaseInterface<Model extends TestTypeModel> {
-  create<T extends Model>(
-    values: Partial<ModelAttributes<InstanceType<T>>>
-  ): Promise<InstanceType<T>>
+/**
+ * ------------------------------------------------------
+ *  Base Interface
+ * ------------------------------------------------------
+ * - to be implemented in a base class
+ */
+export interface BaseInterface<Model extends BaseTypeModel> {
+  /**
+   * Create model and return its instance back
+   */
+  store<T extends Model>(values: ModelTypes<T>): Promise<InstanceType<T>>
 }
+
+/**
+ * ------------------------------------------------------
+ *  Base Types
+ * ------------------------------------------------------
+ */
+export type ModelTypes<T extends BaseTypeModel> = Partial<ModelAttributes<InstanceType<T>>>

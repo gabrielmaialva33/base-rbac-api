@@ -8,7 +8,7 @@ export default class UsersControllers {
     const data = request.all()
 
     const storeService = container.resolve(StoreUserService)
-    const user = await storeService.init(data)
+    const user = await storeService.run(data)
 
     return response.json(user)
   }

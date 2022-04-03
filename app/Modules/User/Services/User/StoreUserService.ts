@@ -12,7 +12,7 @@ export class StoreUserService {
     private usersRepository: IUser.Repository
   ) {}
 
-  public async init(data: DTO.Store): Promise<User> {
-    return this.usersRepository.create(data)
+  public async run(data: DTO.Store): Promise<User> {
+    return this.usersRepository.store(data)
   }
 }
