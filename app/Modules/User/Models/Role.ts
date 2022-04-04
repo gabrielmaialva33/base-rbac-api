@@ -1,4 +1,4 @@
-import { column } from '@ioc:Adonis/Lucid/Orm'
+import { column, scope } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
@@ -52,6 +52,16 @@ export default class Role extends BaseModel {
    * Hooks
    * ------------------------------------------------------
    */
+  public static searchQueryScope = scope((query, search) => {
+    const fields = ['slug', 'description']
+    let sql = ''
+
+    fields.forEach((field, i) => {
+      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} ilike '%${search}%'`
+    })
+
+    return query.whereRaw(`(${sql})`)
+  })
 
   /**
    * ------------------------------------------------------

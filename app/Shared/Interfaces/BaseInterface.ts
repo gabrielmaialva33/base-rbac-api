@@ -1,4 +1,6 @@
-import { ModelAttributes } from '@ioc:Adonis/Lucid/Orm'
+import { LucidRow, ModelAttributes, ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
+import { SimplePaginatorContract } from '@ioc:Adonis/Lucid/Database'
+
 import BaseModel from 'App/Shared/Models/BaseModel'
 
 /**
@@ -8,6 +10,10 @@ import BaseModel from 'App/Shared/Models/BaseModel'
  * - to be implemented in a base repository class and interfaces
  */
 export interface BaseInterface<Model extends typeof BaseModel> {
+  /**
+   * Fetch rows with pagination
+   */
+  listWithPagination<T extends Model>(params: PaginatorParams<T>): Promise<PaginatorContract<T>>
   /**
    * Create model and return its instance back
    */
@@ -32,8 +38,26 @@ export interface BaseInterface<Model extends typeof BaseModel> {
  */
 export type ModelType<T extends typeof BaseModel> = Partial<ModelAttributes<InstanceType<T>>>
 
+export type PaginatorContract<T extends typeof BaseModel> =
+  | ModelPaginatorContract<LucidRow & InstanceType<T>>
+  | SimplePaginatorContract<InstanceType<T>>
 /**
  * ------------------------------------------------------
  *  Interfaces
  * ------------------------------------------------------
  */
+export interface PaginatorParams<T extends typeof BaseModel> {
+  page: number
+  perPage: number
+  clause?: Clauses<T>
+  order?: OrderBy<T>
+}
+
+export interface Clauses<T extends typeof BaseModel> {
+  where: ModelType<T>
+}
+
+export interface OrderBy<T extends typeof BaseModel> {
+  column: ModelType<T>
+  direction?: 'asc' | 'desc'
+}
