@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 
-import User from 'App/Modules/User/Models/User'
 import { IUser } from 'App/Modules/User/Interfaces/UserInterface'
+import User from 'App/Modules/User/Models/User'
 
 import DTO = IUser.DTO
 

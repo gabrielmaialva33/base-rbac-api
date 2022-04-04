@@ -1,10 +1,9 @@
+import { column } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
-import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave } from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
 
-export default class User extends BaseModel {
+export default class Role extends BaseModel {
   /**
    * ------------------------------------------------------
    * Columns
@@ -15,28 +14,19 @@ export default class User extends BaseModel {
   public id: string
 
   @column()
-  public first_name: string
+  public slug: string
 
   @column()
-  public last_name: string
+  public name: string
 
   @column()
-  public username: string
+  public description: string
 
   @column()
-  public email: string
-
-  @column({ serializeAs: null })
-  public password: string
+  public is_active: boolean
 
   @column()
-  public remember_me_token?: string
-
-  @column()
-  public is_online: boolean
-
-  @column()
-  public is_blocked: boolean
+  public is_deletable: boolean
 
   @column({ serializeAs: null })
   public is_deleted: boolean
@@ -54,7 +44,7 @@ export default class User extends BaseModel {
    * ------------------------------------------------------
    * Relationships
    * ------------------------------------------------------
-   * - define User model relationships
+   * - define Role model relationships
    */
 
   /**
@@ -62,12 +52,6 @@ export default class User extends BaseModel {
    * Hooks
    * ------------------------------------------------------
    */
-  @beforeSave()
-  public static async hashPassword(user: User) {
-    if (user.$dirty.password) {
-      user.password = await Hash.make(user.password)
-    }
-  }
 
   /**
    * ------------------------------------------------------

@@ -9,14 +9,14 @@ export default class Roles extends BaseSchema {
       this.schema.createTable(this.tableName, (table) => {
         table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
 
-        table.string('name', 40).notNullable()
         table.string('slug', 80).notNullable()
+        table.string('name', 40).notNullable()
         table.text('description').nullable()
 
         table.boolean('is_active').notNullable().defaultTo(true)
+        table.boolean('is_deletable').notNullable().defaultTo(true)
 
         table.boolean('is_deleted').notNullable().defaultTo(false)
-        table.boolean('is_deletable').notNullable().defaultTo(true)
 
         table.timestamp('created_at', { useTz: true })
         table.timestamp('updated_at', { useTz: true })

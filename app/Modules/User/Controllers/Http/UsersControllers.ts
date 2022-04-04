@@ -2,7 +2,7 @@ import { container } from 'tsyringe'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import { StoreUserService } from 'App/Modules/User/Services/User'
-import StoreUserValidator from 'App/Modules/User/Validators/StoreUserValidator'
+import StoreUserValidator from 'App/Modules/User/Validators/User/StoreUserValidator'
 
 export default class UsersControllers {
   public async store({ request, response }: HttpContextContract): Promise<void> {
