@@ -31,7 +31,6 @@
 
 <br>
 
-
 ## :bookmark: Sobre
 
 **Base RBAC** é uma API base de controle de acesso baseada em função que espera atender a muitos projetos.
@@ -40,11 +39,11 @@
 
 ## :computer: Tecnologias
 
--  **[Typescript](https://www.typescriptlang.org/)**
--  **[Node.js](https://nodejs.org/)**
--  **[AdonisJS](https://adonisjs.com/)**
--  **[PostgreSQL](https://www.postgresql.org/)**
--  **[Docker](https://www.docker.com/)**
+- **[Typescript](https://www.typescriptlang.org/)**
+- **[Node.js](https://nodejs.org/)**
+- **[AdonisJS](https://adonisjs.com/)**
+- **[PostgreSQL](https://www.postgresql.org/)**
+- **[Docker](https://www.docker.com/)**
 
 <br>
 
@@ -78,7 +77,7 @@ Os seguintes softwares devem estar instalados:
 
 <br>
 
-### :arrow_forward:	**Rodando o backend**
+### :arrow_forward: **Rodando o backend**
 
 - :package: API
 
