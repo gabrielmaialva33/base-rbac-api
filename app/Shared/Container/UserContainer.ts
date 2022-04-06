@@ -13,7 +13,7 @@ import { IRole } from 'App/Modules/User/Interfaces/RoleInterface'
 import RolesRepository from 'App/Modules/User/Repositories/RolesRepository'
 
 /**
- * User
+ * User Repository
  */
 container.registerSingleton<IUser.Repository>(
   'UsersRepository',
@@ -21,7 +21,7 @@ container.registerSingleton<IUser.Repository>(
 )
 
 /**
- * Role
+ * Role Repository
  */
 container.registerSingleton<IRole.Repository>(
   'RolesRepository',

@@ -4,7 +4,7 @@ import { IRole } from 'App/Modules/User/Interfaces/RoleInterface'
 import { RolesDefaults } from 'App/Modules/User/Defaults/RolesDefault'
 
 @injectable()
-export default class CreateDefaultRolesService {
+export default class DefaultRolesService {
   constructor(
     @inject('RolesRepository')
     private rolesRepository: IRole.Repository
@@ -12,7 +12,7 @@ export default class CreateDefaultRolesService {
 
   public async run(): Promise<void> {
     for (let i = 0; i < RolesDefaults.length; i++) {
-      await this.rolesRepository.firstOrStore(
+      await this.rolesRepository.findOrStore(
         {
           name: RolesDefaults[i].name,
         },

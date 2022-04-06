@@ -1,4 +1,4 @@
 export * from './ListRoleService'
-export * from './ShowRoleService'
-export * from './StoreRoleService'
-export * from './DestroyRoleService'
+export * from './GetRoleService'
+export * from './CreateRoleService'
+export * from './DeleteRoleService'

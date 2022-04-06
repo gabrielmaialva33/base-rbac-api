@@ -11,13 +11,29 @@ import BaseModel from 'App/Shared/Models/BaseModel'
  */
 export interface BaseInterface<Model extends typeof BaseModel> {
   /**
+   * Fetch all rows with pagination
+   */
+  index<T extends Model>(clause?: Clauses<T>, order?: OrderBy<T>): Promise<Array<InstanceType<T>>>
+  /**
    * Fetch rows with pagination
    */
-  listWithPagination<T extends Model>(params: PaginatorParams<T>): Promise<PaginatorContract<T>>
+  indexWithPagination<T extends Model>(params: PaginatorParams<T>): Promise<PaginatorContract<T>>
+  /**
+   * Find one using a key-value pair and clauses
+   */
+  findBy<T extends Model>(
+    key: string,
+    value: any,
+    clause?: Clauses<T>
+  ): Promise<null | InstanceType<T>>
   /**
    * Create model and return its instance back
    */
   store<T extends Model>(values: ModelType<T>): Promise<InstanceType<T>>
+  /**
+   * Update model and return its instance back
+   */
+  update<T extends InstanceType<Model>>(model: T): Promise<T>
   /**
    * Create many of model instances
    */
@@ -25,10 +41,7 @@ export interface BaseInterface<Model extends typeof BaseModel> {
   /**
    * Returns the first row or save it to the database
    */
-  firstOrStore<T extends Model>(
-    search: ModelType<T>,
-    values: ModelType<T>
-  ): Promise<InstanceType<T>>
+  findOrStore<T extends Model>(search: ModelType<T>, values: ModelType<T>): Promise<InstanceType<T>>
 }
 
 /**
