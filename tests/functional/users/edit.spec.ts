@@ -15,8 +15,6 @@ test.group('User:Edit', () => {
       password: '123456',
       password_confirmation: '123456',
     })
-    console.log(response.body())
-
     response.assertStatus(200)
     response.assertBodyContains({
       id: oldUser.id,
