@@ -36,12 +36,11 @@ const redisConfig: RedisConfig = {
     |
     */
     local: {
-      host: Env.get('REDIS_HOST', '127.0.0.1'),
-      port: Env.get('REDIS_PORT', 6379),
+      host: Env.get('REDIS_HOST'),
+      port: Env.get('REDIS_PORT'),
       password: Env.get('REDIS_PASSWORD', ''),
       db: 0,
-      keyPrefix: 'base_rbac_api',
-      healthCheck: true,
+      keyPrefix: '',
     },
   },
 }

@@ -20,18 +20,13 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-Route.get('/', async ({ response }: HttpContextContract) => {
+Route.get('/health', async ({ response }) => {
   const report = await HealthCheck.getReport()
+
   return report.healthy ? response.ok(report) : response.badRequest(report)
 })
 
-/**
- * ------------------------------------------------------
- * User
- * ------------------------------------------------------
- * - import User module routes
- */
-import 'App/Modules/User/Routes/UserRoutes'
-import 'App/Modules/User/Routes/RoleRoutes'
+/** Accounts Module */
+import 'App/Modules/Accounts/Routes/UsersRoute'
+import 'App/Modules/Accounts/Routes/RolesRoute'

@@ -5,72 +5,92 @@ import BaseModel from 'App/Shared/Models/BaseModel'
 
 /**
  * ------------------------------------------------------
- *  Base Interface
+ * Base Repository Interface
  * ------------------------------------------------------
- * - to be implemented in a base repository class and interfaces
+ * - This a base interface methods for model repositories
  */
-export interface BaseInterface<Model extends typeof BaseModel> {
+export default interface BaseInterface<Model extends typeof BaseModel> extends Helpers<Model> {
   /**
-   * Fetch all rows with pagination
+   * Fetch all rows with clauses
    */
-  index<T extends Model>(clause?: Clauses<T>, order?: OrderBy<T>): Promise<Array<InstanceType<T>>>
+  list<T extends Model>(params: ListParams<T>): Promise<Array<InstanceType<T>>>
   /**
-   * Fetch rows with pagination
+   * Create model and return its instance back
    */
-  indexWithPagination<T extends Model>(params: PaginatorParams<T>): Promise<PaginatorContract<T>>
+  store<T extends Model>(
+    values: Partial<ModelAttributes<InstanceType<T>>>
+  ): Promise<InstanceType<T>>
   /**
-   * Find one using a key-value pair and clauses
+   * Save or update model instance
+   */
+  save<T extends InstanceType<typeof BaseModel>>(model: T): Promise<T>
+}
+
+/**
+ * ------------------------------------------------------
+ * Helpers Interface
+ * ------------------------------------------------------
+ * - This a base helpers methods for model repositories
+ */
+interface Helpers<Model extends typeof BaseModel> {
+  /**
+   * Fetch all rows with clauses and pagination
+   */
+  listWithPagination<T extends Model>(params: PaginateParams<T>): Promise<PaginateContractType<T>>
+  /**
+   * Find one using a key-value pair
    */
   findBy<T extends Model>(
     key: string,
     value: any,
-    clause?: Clauses<T>
-  ): Promise<null | InstanceType<T>>
-  /**
-   * Create model and return its instance back
-   */
-  store<T extends Model>(values: ModelType<T>): Promise<InstanceType<T>>
-  /**
-   * Update model and return its instance back
-   */
-  update<T extends InstanceType<Model>>(model: T): Promise<T>
-  /**
-   * Create many of model instances
-   */
-  storeMany<T extends Model>(values: Array<ModelType<T>>): Promise<Array<InstanceType<T>>>
+    closers?: ModelClause<T>,
+    order?: OrderBy
+  ): Promise<InstanceType<T> | null>
   /**
    * Returns the first row or save it to the database
    */
-  findOrStore<T extends Model>(search: ModelType<T>, values: ModelType<T>): Promise<InstanceType<T>>
+  findOrStore<T extends Model>(
+    searchPayload: ModelType<T>,
+    savePayload: ModelType<T>
+  ): Promise<InstanceType<T>>
+  /**
+   * Get plucked values with given params
+   * and return a resolved any array promise
+   */
+  pluckBy<T extends Model>(column: string, closers?: ModelClause<T>): Promise<any[]>
 }
 
 /**
- * ------------------------------------------------------
- *  Types
- * ------------------------------------------------------
+ * Types
  */
-export type ModelType<T extends typeof BaseModel> = Partial<ModelAttributes<InstanceType<T>>>
+export type ModelType<Model extends typeof BaseModel> = Partial<
+  ModelAttributes<InstanceType<Model>>
+>
 
-export type PaginatorContract<T extends typeof BaseModel> =
-  | ModelPaginatorContract<LucidRow & InstanceType<T>>
-  | SimplePaginatorContract<InstanceType<T>>
+export type PaginateContractType<Model extends typeof BaseModel> =
+  | ModelPaginatorContract<LucidRow & InstanceType<Model>>
+  | SimplePaginatorContract<InstanceType<Model>>
+
 /**
- * ------------------------------------------------------
- *  Interfaces
- * ------------------------------------------------------
+ * Interfaces
  */
-export interface PaginatorParams<T extends typeof BaseModel> {
+export interface ListParams<Model extends typeof BaseModel> {
+  clauses?: ModelClause<Model>
+  order?: OrderBy
+}
+export interface PaginateParams<Model extends typeof BaseModel> {
   page: number
   perPage: number
-  clause?: Clauses<T>
-  order?: OrderBy<T>
+  search?: string
+  clauses?: ModelClause<Model>
+  order?: OrderBy
 }
 
-export interface Clauses<T extends typeof BaseModel> {
-  where: ModelType<T>
+export interface ModelClause<Model extends typeof BaseModel> {
+  where?: ModelType<Model>
 }
 
-export interface OrderBy<T extends typeof BaseModel> {
-  column: ModelType<T>
+export interface OrderBy {
+  column: string
   direction?: 'asc' | 'desc'
 }

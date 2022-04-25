@@ -1,1 +1,2 @@
-import './UserContainer'
+/** Accounts Module */
+import './AccountsContainer'

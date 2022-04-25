@@ -1,42 +1,67 @@
-import {
-  BaseInterface,
+import IBaseRepository, {
+  ListParams,
+  ModelClause,
   ModelType,
-  PaginatorParams,
-  PaginatorContract,
-  Clauses,
   OrderBy,
+  PaginateContractType,
+  PaginateParams,
 } from 'App/Shared/Interfaces/BaseInterface'
 import BaseModel from 'App/Shared/Models/BaseModel'
+import { ModelAttributes } from '@ioc:Adonis/Lucid/Orm'
 
 export default class BaseRepository<Model extends typeof BaseModel>
-  implements BaseInterface<Model>
+  implements IBaseRepository<Model>
 {
-  constructor(protected model: Model) {}
+  constructor(protected orm: Model) {}
 
   /**
    * Repository
    */
-  public async index<T extends Model>(
-    clause?: Clauses<T>,
-    order?: OrderBy<T>
-  ): Promise<InstanceType<T>[]> {
-    const models = this.model.query()
+  public async list<T extends Model>({
+    clauses,
+    order,
+  }: ListParams<T>): Promise<Array<InstanceType<T>>> {
+    const models = this.orm.query()
 
-    if (clause?.where) models.where(clause.where)
-    if (order) models.orderBy(String(order.column), order.direction)
+    if (clauses) models.where({ ...clauses.where })
+    if (order) models.orderBy(order.column, order.direction)
 
     return models
   }
 
-  public async indexWithPagination<T extends Model>(
-    params: PaginatorParams<T>
-  ): Promise<PaginatorContract<T>> {
-    const { page, perPage, clause, order } = params
+  public async store<T extends Model>(
+    values: Partial<ModelAttributes<InstanceType<T>>>
+  ): Promise<InstanceType<T>> {
+    return this.orm.create(values)
+  }
 
-    const models = this.model.query()
+  public async save<T extends InstanceType<typeof BaseModel>>(model: T): Promise<T> {
+    return model.save()
+  }
 
-    if (clause?.where) models.where(clause.where)
-    if (order) models.orderBy(String(order.column), order.direction)
+  /**
+   * Helpers
+   */
+  public async listWithPagination<T extends Model>(
+    params: PaginateParams<T>
+  ): Promise<PaginateContractType<T>> {
+    const { page, perPage, search, clauses, order } = params
+
+    const models = this.orm.query()
+
+    /** search query */
+    if (search) {
+      models.apply((scope) => {
+        scope['searchQueryScope'](search)
+      })
+    }
+
+    if (clauses)
+      Object.entries(clauses).find(([key, value]) => {
+        if (key === 'where') models.where(value)
+      })
+
+    if (order) models.orderBy(order.column, order.direction)
 
     return models.paginate(page, perPage)
   }
@@ -44,33 +69,43 @@ export default class BaseRepository<Model extends typeof BaseModel>
   public async findBy<T extends Model>(
     key: string,
     value: any,
-    clause?: Clauses<T>
-  ): Promise<null | InstanceType<T>> {
-    const model = this.model.query()
-    if (clause?.where) model.where(clause.where)
-
+    clauses?: ModelClause<T>,
+    order?: OrderBy
+  ): Promise<InstanceType<T> | null> {
+    const model = this.orm.query()
     model.where(key, value)
-    return this.model.first()
-  }
 
-  public async store<T extends Model>(values: ModelType<T>): Promise<InstanceType<T>> {
-    return this.model.create(values)
-  }
+    if (clauses)
+      Object.entries(clauses).find(([key, value]) => {
+        if (key === 'where') model.where(value)
+      })
 
-  public async update<T extends InstanceType<Model>>(model: T): Promise<T> {
-    return model.save()
-  }
+    if (order) model.orderBy(order.column, order.direction)
 
-  public async storeMany<T extends Model>(
-    values: Array<ModelType<T>>
-  ): Promise<Array<InstanceType<T>>> {
-    return this.model.createMany(values)
+    return model.first()
   }
 
   public async findOrStore<T extends Model>(
-    search: ModelType<T>,
-    values: ModelType<T>
+    searchPayload: ModelType<T>,
+    savePayload: ModelType<T>
   ): Promise<InstanceType<T>> {
-    return this.model.firstOrCreate(search, values)
+    return this.orm.firstOrCreate(searchPayload, savePayload)
+  }
+
+  /**
+   * Get plucked values with given params
+   * @param {string} column to plucked values by key
+   * @param {ModelClause<this>} clauses to filter by where not query
+   * @returns a resolved any array promise
+   */
+  public async pluckBy<T extends Model>(column: string, clauses?: ModelClause<T>): Promise<any[]> {
+    const models = this.orm.query().select([column])
+
+    if (clauses)
+      Object.entries(clauses).find(([key, value]) => {
+        if (key === 'where') models.where(value)
+      })
+
+    return (await models).map((item) => item[column])
   }
 }

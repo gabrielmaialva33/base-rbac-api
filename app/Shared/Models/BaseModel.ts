@@ -8,9 +8,7 @@ import {
 
 export default class BaseModel extends BaseAdonisModel {
   /**
-   * ------------------------------------------------------
    * Hooks
-   * ------------------------------------------------------
    */
   @beforeFind()
   @beforeFetch()

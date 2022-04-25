@@ -15,6 +15,7 @@
     "types": [
       "@adonisjs/core",
       "@adonisjs/repl",
+      "@japa/preset-adonis/build/adonis-typings",
       "@adonisjs/lucid",
       "@adonisjs/redis",
       "@adonisjs/auth"
