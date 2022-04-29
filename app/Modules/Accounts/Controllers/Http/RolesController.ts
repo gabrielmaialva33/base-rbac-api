@@ -12,9 +12,13 @@ import {
 import { RolesValidator as Validator } from 'App/Modules/Accounts/Validators/RolesValidator'
 
 export default class RolesController {
-  public async list({ response }: HttpContextContract): Promise<void> {
+  public async list({ request, response }: HttpContextContract): Promise<void> {
+    const page = request.input('page', 1)
+    const perPage = request.input('per_page', 10)
+    const search = request.input('search', '')
+
     const listRoles = container.resolve(ListRoleService)
-    const roles = await listRoles.run()
+    const roles = await listRoles.run({ page, perPage, search })
 
     return response.json(roles)
   }

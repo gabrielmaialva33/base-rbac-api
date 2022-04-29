@@ -2,6 +2,8 @@ import { inject, injectable } from 'tsyringe'
 
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
 
+import DTOs = IRole.DTOs
+
 @injectable()
 export class ListRoleService {
   constructor(
@@ -9,8 +11,11 @@ export class ListRoleService {
     private rolesRepository: IRole.Repository
   ) {}
 
-  public async run() {
-    return this.rolesRepository.list({
+  public async run({ page = 1, perPage = 10, search = '' }: DTOs.List) {
+    return this.rolesRepository.listWithPagination({
+      page,
+      perPage,
+      search,
       order: {
         column: 'slug',
       },
