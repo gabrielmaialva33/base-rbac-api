@@ -16,6 +16,8 @@ export class GetUserService {
     const user = await this.usersRepository.findBy('id', userId)
     if (!user) throw new NotFoundException('User not found or not available.')
 
+    await user.load('roles', (builder) => builder.orderBy('slug'))
+
     return user.toJSON()
   }
 }

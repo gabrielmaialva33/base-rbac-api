@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { column, beforeSave, scope, computed } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, scope, computed, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
+import Role from 'App/Modules/Accounts/Models/Role'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -58,7 +59,14 @@ export default class User extends BaseModel {
    * ------------------------------------------------------
    * - define User model relationships
    */
-
+  @manyToMany(() => Role, {
+    localKey: 'id',
+    pivotForeignKey: 'user_id',
+    relatedKey: 'id',
+    pivotRelatedForeignKey: 'role_id',
+    pivotTable: 'users_roles',
+  })
+  public roles: ManyToMany<typeof Role>
   /**
    * ------------------------------------------------------
    * Hooks
@@ -78,7 +86,7 @@ export default class User extends BaseModel {
     let sql = ''
 
     fields.forEach((field, i) => {
-      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} ilike '%${search}%'`
+      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} like '%${search}%'`
     })
 
     return query.whereRaw(`(${sql})`)

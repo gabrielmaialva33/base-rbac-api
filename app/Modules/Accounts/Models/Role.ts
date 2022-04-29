@@ -64,11 +64,11 @@ export default class Role extends BaseModel {
    * ------------------------------------------------------
    */
   public static searchQueryScope = scope((query, search) => {
-    const fields = ['name', 'slug', 'destination']
+    const fields = ['slug', 'description']
     let sql = ''
 
     fields.forEach((field, i) => {
-      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} ilike '%${search}%'`
+      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} like '%${search}%'`
     })
 
     return query.whereRaw(`(${sql})`)

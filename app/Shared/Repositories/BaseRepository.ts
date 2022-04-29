@@ -23,8 +23,20 @@ export default class BaseRepository<Model extends typeof BaseModel>
   }: ListParams<T>): Promise<Array<InstanceType<T>>> {
     const models = this.orm.query()
 
-    if (clauses) models.where({ ...clauses.where })
-    if (order) models.orderBy(order.column, order.direction)
+    if (clauses)
+      Object.entries(clauses).find(([key, value]) => {
+        if (key === 'where') models.where(value)
+        if (key === 'like') {
+          const { column, match } = value
+          console.log({ column, match })
+          if (column && match) models.where(column, 'LIKE', `%${match}%`)
+        }
+      })
+
+    if (order) {
+      const { column, direction } = order
+      if (column) models.orderBy(String(column), direction ? direction : 'asc')
+    }
 
     return models
   }
@@ -59,9 +71,16 @@ export default class BaseRepository<Model extends typeof BaseModel>
     if (clauses)
       Object.entries(clauses).find(([key, value]) => {
         if (key === 'where') models.where(value)
+        if (key === 'like') {
+          const { column, match } = value
+          if (column && match) models.where(column, 'LIKE', `%${match}%`)
+        }
       })
 
-    if (order) models.orderBy(order.column, order.direction)
+    if (order) {
+      const { column, direction } = order
+      if (column) models.orderBy(String(column), direction ? direction : 'asc')
+    }
 
     return models.paginate(page, perPage)
   }
@@ -70,7 +89,7 @@ export default class BaseRepository<Model extends typeof BaseModel>
     key: string,
     value: any,
     clauses?: ModelClause<T>,
-    order?: OrderBy
+    order?: OrderBy<Model>
   ): Promise<InstanceType<T> | null> {
     const model = this.orm.query()
     model.where(key, value)
@@ -78,9 +97,16 @@ export default class BaseRepository<Model extends typeof BaseModel>
     if (clauses)
       Object.entries(clauses).find(([key, value]) => {
         if (key === 'where') model.where(value)
+        if (key === 'like') {
+          const { column, match } = value
+          if (column && match) model.where(column, 'LIKE', `%${match}%`)
+        }
       })
 
-    if (order) model.orderBy(order.column, order.direction)
+    if (order) {
+      const { column, direction } = order
+      if (column) model.orderBy(String(column), direction ? direction : 'asc')
+    }
 
     return model.first()
   }
@@ -104,6 +130,10 @@ export default class BaseRepository<Model extends typeof BaseModel>
     if (clauses)
       Object.entries(clauses).find(([key, value]) => {
         if (key === 'where') models.where(value)
+        if (key === 'like') {
+          const { column, match } = value
+          if (column && match) models.where(column, 'LIKE', `%${match}%`)
+        }
       })
 
     return (await models).map((item) => item[column])

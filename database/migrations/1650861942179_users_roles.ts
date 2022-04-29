@@ -25,8 +25,8 @@ export default class UsersRoles extends BaseSchema {
           .onDelete('CASCADE')
           .onUpdate('CASCADE')
 
-        table.timestamp('created_at', { useTz: true })
-        table.timestamp('updated_at', { useTz: true })
+        table.timestamp('created_at', { useTz: true }).defaultTo('now()')
+        table.timestamp('updated_at', { useTz: true }).defaultTo('now()')
       })
     else Logger.info('UsersRoles migration already running')
   }

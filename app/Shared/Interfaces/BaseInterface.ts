@@ -44,7 +44,7 @@ interface Helpers<Model extends typeof BaseModel> {
     key: string,
     value: any,
     closers?: ModelClause<T>,
-    order?: OrderBy
+    order?: OrderBy<Model>
   ): Promise<InstanceType<T> | null>
   /**
    * Returns the first row or save it to the database
@@ -67,6 +67,8 @@ export type ModelType<Model extends typeof BaseModel> = Partial<
   ModelAttributes<InstanceType<Model>>
 >
 
+export type ModelKeysType<Model extends typeof BaseModel> = keyof ModelType<Model>
+
 export type PaginateContractType<Model extends typeof BaseModel> =
   | ModelPaginatorContract<LucidRow & InstanceType<Model>>
   | SimplePaginatorContract<InstanceType<Model>>
@@ -76,21 +78,22 @@ export type PaginateContractType<Model extends typeof BaseModel> =
  */
 export interface ListParams<Model extends typeof BaseModel> {
   clauses?: ModelClause<Model>
-  order?: OrderBy
+  order?: OrderBy<Model>
 }
 export interface PaginateParams<Model extends typeof BaseModel> {
   page: number
   perPage: number
   search?: string
   clauses?: ModelClause<Model>
-  order?: OrderBy
+  order?: OrderBy<Model>
 }
 
 export interface ModelClause<Model extends typeof BaseModel> {
   where?: ModelType<Model>
+  like?: { column: ModelKeysType<Model>; match: string }
 }
 
-export interface OrderBy {
-  column: string
+export interface OrderBy<Model extends typeof BaseModel> {
+  column: ModelKeysType<Model>
   direction?: 'asc' | 'desc'
 }
