@@ -83,7 +83,7 @@
   dependencies:
     "@poppinss/utils" "^4.0.2"
 
-"@adonisjs/core@^5.6.0":
+"@adonisjs/core@^5.7.5":
   version "5.7.5"
   resolved "https://registry.yarnpkg.com/@adonisjs/core/-/core-5.7.5.tgz#889331feb59185c59bc261d95645cb637c3205f6"
   integrity sha512-qmxQgLHzLAcbrWPQ0Z5mbwnK+5vk+NQk6KQM9Go+xLzzZQjl2ZWL+tTDPN872pXVRlut9Ebn8GZamYiMOm+vxg==
@@ -234,7 +234,7 @@
     "@types/ioredis" "^4.28.10"
     ioredis "^5.0.3"
 
-"@adonisjs/repl@^3.1.0":
+"@adonisjs/repl@^3.1.10":
   version "3.1.10"
   resolved "https://registry.yarnpkg.com/@adonisjs/repl/-/repl-3.1.10.tgz#6300fc0022c7e30bb94cb8f59e1ad82bde367446"
   integrity sha512-UYp99g2gxyqsqafk6qsGExjlCOB5aU3cY56r2wCx5p2ybDrhx8H5xU175KUVA+TqARtHyqOrj9JvOoqGWx95og==
@@ -4984,10 +4984,10 @@ type-is@^1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@~4.6:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
-  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
+typescript@^4.6.4:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 uid-safe@2.1.5:
   version "2.1.5"
