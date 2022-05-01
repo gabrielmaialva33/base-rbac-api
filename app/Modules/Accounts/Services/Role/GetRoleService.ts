@@ -14,6 +14,8 @@ export class GetRoleService {
     const role = await this.rolesRepository.findBy('id', roleId)
     if (!role) throw new NotFoundException('Role not found or not available.')
 
+    await role.load('permissions')
+
     return role
   }
 }

@@ -12,10 +12,10 @@ export default class Permission extends BaseModel {
    * ------------------------------------------------------
    * - column typing struct
    */
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: string
 
-  @column()
+  @column({ serializeAs: null })
   public name: string
 
   @column()

@@ -8,22 +8,29 @@ export default class Rbac {
     next: () => Promise<void>,
     allowedRoles: Array<string>
   ) {
-    console.log(request.method())
-    console.log(request.ctx?.route?.pattern)
-    console.log(request.ctx?.route?.name)
-
     if (Array.isArray(allowedRoles) === false)
       throw new AuthorizationException('User not authorized.')
 
     const user = await auth.authenticate()
-    await user.load('roles')
+    await user.load('roles', (builder) => builder.preload('permissions'))
 
     const roles = user.roles.map((role) => {
-      return role.name
+      return role
     })
 
-    for (const roleName of allowedRoles) if (roles.includes(roleName)) return next()
+    for (const role of roles) {
+      if (!allowedRoles.includes(role.name))
+        throw new AuthorizationException('User not authorized.')
 
-    throw new AuthorizationException('User not authorized.')
+      const permission = role.permissions.find((p) => p.method === request.method())
+      if (!permission) throw new AuthorizationException('User not authorized.')
+
+      if (permission.action === 'DENY') throw new AuthorizationException('User not authorized.')
+
+      if (!request.url().includes(permission.resource))
+        throw new AuthorizationException('User not authorized.')
+    }
+
+    return next()
   }
 }
