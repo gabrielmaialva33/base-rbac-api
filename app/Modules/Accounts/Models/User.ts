@@ -85,9 +85,9 @@ export default class User extends BaseModel {
     const fields = ['first_name', 'last_name', 'username', 'email']
     let sql = ''
 
-    fields.forEach((field, i) => {
-      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} like '%${search}%'`
-    })
+    fields.forEach(
+      (field, i) => (sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} like '%${search}%'`)
+    )
 
     return query.whereRaw(`(${sql})`)
   })

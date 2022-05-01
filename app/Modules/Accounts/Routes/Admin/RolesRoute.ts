@@ -7,4 +7,6 @@ Route.group(() => {
   Route.post('/', new RolesController().store).as('roles.store')
   Route.put('/:id', new RolesController().edit).as('roles.edit')
   Route.delete('/:id', new RolesController().delete).as('roles.delete')
-}).prefix('roles')
+})
+  .prefix('roles')
+  .middleware(['auth', 'rbac:root,admin'])

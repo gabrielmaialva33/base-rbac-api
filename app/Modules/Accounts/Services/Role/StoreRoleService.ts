@@ -1,6 +1,4 @@
 import { inject, injectable } from 'tsyringe'
-import crypto from 'crypto'
-import Hash from '@ioc:Adonis/Core/Hash'
 
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
 
@@ -14,10 +12,6 @@ export class StoreRoleService {
   ) {}
 
   public async run(data: DTOs.Store) {
-    const hash = crypto.randomBytes(4).toString('hex').toLowerCase()
-    const name = `${data.slug}-${hash}`.toLowerCase()
-    const token = await Hash.make(hash)
-
-    return this.rolesRepository.store({ ...data, name, token })
+    return this.rolesRepository.store(data)
   }
 }

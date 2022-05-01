@@ -8,4 +8,6 @@ Route.group(() => {
   Route.post('/', new UsersController().store).as('user.store')
   Route.put('/:id', new UsersController().edit).as('user.edit')
   Route.delete('/:id', new UsersController().delete).as('user.delete')
-}).prefix('users')
+})
+  .prefix('users')
+  .middleware(['auth', 'rbac:root,admin'])

@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
-import { column, scope } from '@ioc:Adonis/Lucid/Orm'
+import { column } from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
 
-export default class Role extends BaseModel {
-  public static table = 'roles'
+export default class Permission extends BaseModel {
+  public static table = 'permissions'
 
   /**
    * ------------------------------------------------------
@@ -16,21 +16,15 @@ export default class Role extends BaseModel {
   public id: string
 
   @column()
-  public slug: string
-
-  @column({ serializeAs: null })
   public name: string
 
   @column()
-  public description: string
+  public slug: string
 
   @column()
-  public deletable: boolean
+  public method: string
 
   @column()
-  public is_active: boolean
-
-  @column({ serializeAs: null })
   public is_deleted: boolean
 
   @column.dateTime({ autoCreate: true, serializeAs: null })
@@ -60,16 +54,6 @@ export default class Role extends BaseModel {
    * Query Scopes
    * ------------------------------------------------------
    */
-  public static searchQueryScope = scope((query, search) => {
-    const fields = ['slug', 'description']
-    let sql = ''
-
-    fields.forEach((field, i) => {
-      sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} like '%${search}%'`
-    })
-
-    return query.whereRaw(`(${sql})`)
-  })
 
   /**
    * ------------------------------------------------------
