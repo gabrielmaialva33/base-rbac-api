@@ -14,16 +14,19 @@ export default interface BaseInterface<Model extends typeof BaseModel> extends H
    * Fetch all rows with clauses
    */
   list<T extends Model>(params: ListParams<T>): Promise<Array<InstanceType<T>>>
+
   /**
    * Create model and return its instance back
    */
   store<T extends Model>(
     values: Partial<ModelAttributes<InstanceType<T>>>
   ): Promise<InstanceType<T>>
+
   /**
    * Create many of model instances
    */
   storeMany<T extends Model>(values: Array<ModelType<T>>): Promise<Array<InstanceType<T>>>
+
   /**
    * Save or update model instance
    */
@@ -41,6 +44,7 @@ interface Helpers<Model extends typeof BaseModel> {
    * Fetch all rows with clauses and pagination
    */
   listWithPagination<T extends Model>(params: PaginateParams<T>): Promise<PaginateContractType<T>>
+
   /**
    * Find one using a key-value pair
    */
@@ -50,6 +54,7 @@ interface Helpers<Model extends typeof BaseModel> {
     closers?: ModelClause<T>,
     order?: OrderBy<Model>
   ): Promise<InstanceType<T> | null>
+
   /**
    * Returns the first row or save it to the database
    */
@@ -57,6 +62,7 @@ interface Helpers<Model extends typeof BaseModel> {
     searchPayload: ModelType<T>,
     savePayload: ModelType<T>
   ): Promise<InstanceType<T>>
+
   /**
    * Get plucked values with given params
    * and return a resolved any array promise
@@ -84,6 +90,7 @@ export interface ListParams<Model extends typeof BaseModel> {
   clauses?: ModelClause<Model>
   order?: OrderBy<Model>
 }
+
 export interface PaginateParams<Model extends typeof BaseModel> {
   page: number
   perPage: number
