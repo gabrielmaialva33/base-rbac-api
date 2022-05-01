@@ -25,16 +25,16 @@ export default class Permission extends BaseModel {
   public method: string
 
   @column()
-  public is_deleted: boolean
+  public resource: string
+
+  @column()
+  public action: string
 
   @column.dateTime({ autoCreate: true, serializeAs: null })
   public created_at: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updated_at: DateTime
-
-  @column.dateTime({ autoUpdate: true, serializeAs: null })
-  public deleted_at: DateTime
 
   /**
    * ------------------------------------------------------

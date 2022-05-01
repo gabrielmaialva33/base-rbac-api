@@ -4,10 +4,14 @@ import AuthorizationException from 'App/Shared/Exceptions/AuthorizationException
 
 export default class Rbac {
   public async handle(
-    { auth }: HttpContextContract,
+    { request, auth }: HttpContextContract,
     next: () => Promise<void>,
     allowedRoles: Array<string>
   ) {
+    console.log(request.method())
+    console.log(request.ctx?.route?.pattern)
+    console.log(request.ctx?.route?.name)
+
     if (Array.isArray(allowedRoles) === false)
       throw new AuthorizationException('User not authorized.')
 

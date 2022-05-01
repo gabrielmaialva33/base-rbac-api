@@ -21,6 +21,10 @@ export default interface BaseInterface<Model extends typeof BaseModel> extends H
     values: Partial<ModelAttributes<InstanceType<T>>>
   ): Promise<InstanceType<T>>
   /**
+   * Create many of model instances
+   */
+  storeMany<T extends Model>(values: Array<ModelType<T>>): Promise<Array<InstanceType<T>>>
+  /**
    * Save or update model instance
    */
   save<T extends InstanceType<typeof BaseModel>>(model: T): Promise<T>

@@ -7,7 +7,6 @@ import IBaseRepository, {
   PaginateParams,
 } from 'App/Shared/Interfaces/BaseInterface'
 import BaseModel from 'App/Shared/Models/BaseModel'
-import { ModelAttributes } from '@ioc:Adonis/Lucid/Orm'
 
 export default class BaseRepository<Model extends typeof BaseModel>
   implements IBaseRepository<Model>
@@ -41,10 +40,14 @@ export default class BaseRepository<Model extends typeof BaseModel>
     return models
   }
 
-  public async store<T extends Model>(
-    values: Partial<ModelAttributes<InstanceType<T>>>
-  ): Promise<InstanceType<T>> {
+  public async store<T extends Model>(values: ModelType<T>): Promise<InstanceType<T>> {
     return this.orm.create(values)
+  }
+
+  public async storeMany<T extends Model>(
+    values: Array<ModelType<T>>
+  ): Promise<Array<InstanceType<T>>> {
+    return this.orm.createMany(values)
   }
 
   public async save<T extends InstanceType<typeof BaseModel>>(model: T): Promise<T> {

@@ -10,6 +10,6 @@ export default class CreateDefaultRoles extends BaseSchema {
   }
 
   public async down() {
-    this.db.rawQuery('truncate roles;').knexQuery
+    this.schema.raw('truncate table roles restart identity cascade;')
   }
 }

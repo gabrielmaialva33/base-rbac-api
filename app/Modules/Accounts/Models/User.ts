@@ -67,6 +67,7 @@ export default class User extends BaseModel {
     pivotTable: 'users_roles',
   })
   public roles: ManyToMany<typeof Role>
+
   /**
    * ------------------------------------------------------
    * Hooks

@@ -10,6 +10,6 @@ export default class CreateDefaultUsers extends BaseSchema {
   }
 
   public async down() {
-    this.db.rawQuery('truncate users;').knexQuery
+    this.schema.raw('truncate table users restart identity cascade;')
   }
 }
