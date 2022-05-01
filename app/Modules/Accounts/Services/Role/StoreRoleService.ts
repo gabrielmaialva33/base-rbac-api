@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import crypto from 'crypto'
 import Hash from '@ioc:Adonis/Core/Hash'
+
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
 
 import DTOs = IRole.DTOs

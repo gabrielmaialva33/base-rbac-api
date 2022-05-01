@@ -18,8 +18,12 @@ export class EditUserService {
     const user = await this.usersRepository.findBy('id', userId)
     if (!user) throw new NotFoundException('User not found or not available.')
 
-    user.merge(data)
+    const { roles, ...userDTO } = data
+
+    user.merge(userDTO)
     await this.usersRepository.save(user)
+
+    if (roles) await this.usersRepository.syncRoles(user, roles)
 
     return user.toJSON()
   }

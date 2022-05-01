@@ -24,6 +24,13 @@ export namespace UsersValidator {
         rules.unique({ table: 'users', column: 'email', whereNot: { is_deleted: true } }),
       ]),
       password: schema.string({ escape: true, trim: true }, [rules.confirmed()]),
+      roles: schema
+        .array([rules.minLength(1)])
+        .members(
+          schema.string({ escape: true, trim: true }, [
+            rules.exists({ table: 'roles', column: 'id', whereNot: { is_deleted: true } }),
+          ])
+        ),
     })
 
     public messages = {}
@@ -42,15 +49,22 @@ export namespace UsersValidator {
         rules.maxLength(80),
       ]),
       username: schema.string.optional({ escape: true, trim: true }, [
-        rules.requiredIfNotExists('email'),
         rules.unique({ table: 'users', column: 'username', whereNot: { is_deleted: true } }),
+        rules.requiredIfNotExists('email'),
       ]),
       email: schema.string.optional({ escape: true, trim: true }, [
         rules.email(),
-        rules.requiredIfNotExists('username'),
         rules.unique({ table: 'users', column: 'email', whereNot: { is_deleted: true } }),
+        rules.requiredIfNotExists('username'),
       ]),
       password: schema.string.optional({ escape: true, trim: true }, [rules.confirmed()]),
+      roles: schema.array
+        .optional([rules.minLength(1)])
+        .members(
+          schema.string({ escape: true, trim: true }, [
+            rules.exists({ table: 'roles', column: 'id', whereNot: { is_deleted: true } }),
+          ])
+        ),
     })
 
     public messages = {}

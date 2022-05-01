@@ -1,6 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-import UsersController from 'App/Modules/Accounts/Controllers/Http/UsersController'
+import UsersController from 'App/Modules/Accounts/Controllers/Http/Admin/UsersController'
 
 Route.group(() => {
   Route.get('/', new UsersController().list).as('user.list')

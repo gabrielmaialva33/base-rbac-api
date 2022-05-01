@@ -1,5 +1,5 @@
-import { column, scope } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
+import { column, scope } from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
 

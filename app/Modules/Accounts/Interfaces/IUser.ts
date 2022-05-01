@@ -4,7 +4,11 @@ import User from 'App/Modules/Accounts/Models/User'
 export namespace IUser {
   export interface Repository extends BaseInterface<typeof User>, Helpers {}
 
-  interface Helpers {}
+  interface Helpers {
+    attachRoles(user: User, ids: Array<string | number>): Promise<void>
+
+    syncRoles(user: User, ids: Array<string | number>): Promise<void>
+  }
 
   export namespace DTOs {
     export interface List {
@@ -19,6 +23,7 @@ export namespace IUser {
       username: string
       email: string
       password: string
+      roles: Array<string>
     }
 
     export interface Edit {
@@ -27,6 +32,7 @@ export namespace IUser {
       username?: string
       email?: string
       password?: string
+      roles?: Array<string>
     }
   }
 }
