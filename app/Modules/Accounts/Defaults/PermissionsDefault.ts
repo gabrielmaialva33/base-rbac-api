@@ -4,7 +4,19 @@ import Permission from 'App/Modules/Accounts/Models/Permission'
 
 type DefaultType = ModelType<typeof Permission>
 
-export const RootPermissions: Array<DefaultType> = [
+export namespace Root {
+  export namespace Resource {}
+}
+
+export namespace Admin {
+  export namespace Resource {}
+}
+
+export namespace User {
+  export namespace Resource {}
+}
+
+export const RootRolePermissions: Array<DefaultType> = [
   {
     slug: 'Read',
     name: 'read',

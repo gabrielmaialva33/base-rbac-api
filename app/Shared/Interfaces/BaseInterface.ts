@@ -1,7 +1,11 @@
-import { LucidRow, ModelAttributes, ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
+import {
+  ExtractScopes,
+  LucidModel,
+  LucidRow,
+  ModelAttributes,
+  ModelPaginatorContract,
+} from '@ioc:Adonis/Lucid/Orm'
 import { SimplePaginatorContract } from '@ioc:Adonis/Lucid/Database'
-
-import BaseModel from 'App/Shared/Models/BaseModel'
 
 /**
  * ------------------------------------------------------
@@ -9,28 +13,26 @@ import BaseModel from 'App/Shared/Models/BaseModel'
  * ------------------------------------------------------
  * - This a base interface methods for model repositories
  */
-export default interface BaseInterface<Model extends typeof BaseModel> extends Helpers<Model> {
+export default interface BaseInterface<Model extends LucidModel> extends Helpers<Model> {
   /**
    * Fetch all rows with clauses
    */
-  list<T extends Model>(params: ListParams<T>): Promise<Array<InstanceType<T>>>
+  list(params: ListParams<Model>): Promise<Array<InstanceType<Model>>>
 
   /**
    * Create model and return its instance back
    */
-  store<T extends Model>(
-    values: Partial<ModelAttributes<InstanceType<T>>>
-  ): Promise<InstanceType<T>>
+  store(values: Partial<ModelAttributes<InstanceType<Model>>>): Promise<InstanceType<Model>>
 
   /**
    * Create many of model instances
    */
-  storeMany<T extends Model>(values: Array<ModelType<T>>): Promise<Array<InstanceType<T>>>
+  storeMany(values: Array<ModelType<Model>>): Promise<Array<InstanceType<Model>>>
 
   /**
    * Save or update model instance
    */
-  save<T extends InstanceType<typeof BaseModel>>(model: T): Promise<T>
+  save<T extends InstanceType<Model>>(model: T): Promise<T>
 }
 
 /**
@@ -39,72 +41,73 @@ export default interface BaseInterface<Model extends typeof BaseModel> extends H
  * ------------------------------------------------------
  * - This a base helpers methods for model repositories
  */
-interface Helpers<Model extends typeof BaseModel> {
+interface Helpers<Model extends LucidModel> {
   /**
    * Fetch all rows with clauses and pagination
    */
-  listWithPagination<T extends Model>(params: PaginateParams<T>): Promise<PaginateContractType<T>>
+  listWithPagination(params: PaginateParams<Model>): Promise<PaginateContractType<Model>>
 
   /**
    * Find one using a key-value pair
    */
-  findBy<T extends Model>(
+  findBy(
     key: string,
     value: any,
-    closers?: ModelClause<T>,
-    order?: OrderBy<Model>
-  ): Promise<InstanceType<T> | null>
+    closers?: ModelClause<Model>,
+    order?: OrderBy<Model>,
+    scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
+  ): Promise<InstanceType<Model> | null>
 
   /**
    * Returns the first row or save it to the database
    */
-  findOrStore<T extends Model>(
-    searchPayload: ModelType<T>,
-    savePayload: ModelType<T>
-  ): Promise<InstanceType<T>>
+  findOrStore(
+    searchPayload: ModelType<Model>,
+    savePayload: ModelType<Model>
+  ): Promise<InstanceType<Model>>
 
   /**
    * Get plucked values with given params
    * and return a resolved any array promise
    */
-  pluckBy<T extends Model>(column: string, closers?: ModelClause<T>): Promise<any[]>
+  pluckBy(column: string, closers?: ModelClause<Model>): Promise<any[]>
 }
 
 /**
  * Types
  */
-export type ModelType<Model extends typeof BaseModel> = Partial<
-  ModelAttributes<InstanceType<Model>>
->
+export type ModelType<Model extends LucidModel> = Partial<ModelAttributes<InstanceType<Model>>>
 
-export type ModelKeysType<Model extends typeof BaseModel> = keyof ModelType<Model>
+export type ModelKeysType<Model extends LucidModel> = keyof ModelType<Model>
 
-export type PaginateContractType<Model extends typeof BaseModel> =
+export type PaginateContractType<Model extends LucidModel> =
   | ModelPaginatorContract<LucidRow & InstanceType<Model>>
   | SimplePaginatorContract<InstanceType<Model>>
 
 /**
  * Interfaces
  */
-export interface ListParams<Model extends typeof BaseModel> {
+export interface ListParams<Model extends LucidModel> {
   clauses?: ModelClause<Model>
   order?: OrderBy<Model>
+  scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
 }
 
-export interface PaginateParams<Model extends typeof BaseModel> {
+export interface PaginateParams<Model extends LucidModel> {
   page: number
   perPage: number
   search?: string
   clauses?: ModelClause<Model>
   order?: OrderBy<Model>
+  scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
 }
 
-export interface ModelClause<Model extends typeof BaseModel> {
+export interface ModelClause<Model extends LucidModel> {
   where?: ModelType<Model>
   like?: { column: ModelKeysType<Model>; match: string }
 }
 
-export interface OrderBy<Model extends typeof BaseModel> {
+export interface OrderBy<Model extends LucidModel> {
   column: ModelKeysType<Model>
   direction?: 'asc' | 'desc'
 }

@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe'
 import { IPermission } from 'App/Modules/Accounts/Interfaces/IPermission'
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
 
-import { RootPermissions } from 'App/Modules/Accounts/Defaults/PermissionsDefault'
+import { RootRolePermissions } from 'App/Modules/Accounts/Defaults/PermissionsDefault'
 
 @injectable()
 export class DefaultRootPermissionService {
@@ -17,7 +17,7 @@ export class DefaultRootPermissionService {
   public async run(): Promise<void> {
     const rootRole = await this.rolesRepository.findBy('name', 'root')
     if (rootRole) {
-      const permissions = await this.permissionsRepository.storeMany(RootPermissions)
+      const permissions = await this.permissionsRepository.storeMany(RootRolePermissions)
       const ids = permissions.map(({ id }) => id)
       await this.rolesRepository.attachPermissions(rootRole, ids)
     }
