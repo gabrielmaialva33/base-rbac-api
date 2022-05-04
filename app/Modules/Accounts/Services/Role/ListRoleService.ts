@@ -15,9 +15,11 @@ export class ListRoleService {
     return this.rolesRepository.listWithPagination({
       page,
       perPage,
-      search,
       order: {
         column: 'slug',
+      },
+      scope: (scope) => {
+        scope.searchQueryScope(search)
       },
     })
   }

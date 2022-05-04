@@ -12,6 +12,12 @@ export class ListUserService {
   ) {}
 
   public async run({ page = 1, perPage = 10, search = '' }: DTOs.List) {
-    return this.usersRepository.listWithPagination({ page, perPage, search })
+    return this.usersRepository.listWithPagination({
+      page,
+      perPage,
+      scope: (scope) => {
+        scope.searchQueryScope(search)
+      },
+    })
   }
 }

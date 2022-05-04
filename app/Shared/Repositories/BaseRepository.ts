@@ -53,16 +53,9 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
   public async listWithPagination(
     params: PaginateParams<Model>
   ): Promise<PaginateContractType<Model>> {
-    const { page, perPage, search, clauses, order, scope } = params
+    const { page, perPage, clauses, order, scope } = params
 
     const models = this.orm.query()
-
-    /** search query */
-    if (search) {
-      models.apply((scope) => {
-        scope['searchQueryScope'](search)
-      })
-    }
 
     if (clauses)
       Object.entries(clauses).find(([key, value]) => {

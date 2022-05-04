@@ -96,7 +96,6 @@ export interface ListParams<Model extends LucidModel> {
 export interface PaginateParams<Model extends LucidModel> {
   page: number
   perPage: number
-  search?: string
   clauses?: ModelClause<Model>
   order?: OrderBy<Model>
   scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
