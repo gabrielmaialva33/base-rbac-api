@@ -1,5 +1,11 @@
 import { DateTime } from 'luxon'
-import { column, ManyToMany, manyToMany, scope } from '@ioc:Adonis/Lucid/Orm'
+import {
+  column,
+  ManyToMany,
+  manyToMany,
+  ModelQueryBuilderContract,
+  scope,
+} from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
 import Permission from 'App/Modules/Accounts/Models/Permission'
@@ -79,6 +85,16 @@ export default class Role extends BaseModel {
 
     return query.whereRaw(`(${sql})`)
   })
+
+  public static loadPermissions = scope((query: ModelQueryBuilderContract<typeof Role>) => {
+    query.preload('permissions')
+  })
+
+  public static loadPermissionsAndOperations = scope(
+    (query: ModelQueryBuilderContract<typeof Role>) => {
+      query.preload('permissions', (builder) => builder.preload('operations'))
+    }
+  )
 
   /**
    * ------------------------------------------------------

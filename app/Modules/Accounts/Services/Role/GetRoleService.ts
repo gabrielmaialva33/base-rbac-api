@@ -1,6 +1,8 @@
 import { inject, injectable } from 'tsyringe'
 
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
+import Role from 'App/Modules/Accounts/Models/Role'
+
 import NotFoundException from 'App/Shared/Exceptions/NotFoundException'
 
 @injectable()
@@ -10,11 +12,13 @@ export class GetRoleService {
     private rolesRepository: IRole.Repository
   ) {}
 
-  public async run(roleId) {
-    const role = await this.rolesRepository.findBy('id', roleId)
+  public async run(roleId): Promise<Role> {
+    const role = await this.rolesRepository.findBy('id', roleId, {
+      scope: (scope) => {
+        scope.loadPermissionsAndOperations()
+      },
+    })
     if (!role) throw new NotFoundException('Role not found or not available.')
-
-    await role.load('permissions')
 
     return role
   }

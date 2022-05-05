@@ -17,7 +17,7 @@ export default interface BaseInterface<Model extends LucidModel> extends Helpers
   /**
    * Fetch all rows with clauses
    */
-  list(params?: ListParams<Model>): Promise<Array<InstanceType<Model>>>
+  list(params?: ContextParams<Model>): Promise<Array<InstanceType<Model>>>
 
   /**
    * Create model and return its instance back
@@ -53,9 +53,7 @@ interface Helpers<Model extends LucidModel> {
   findBy(
     key: string,
     value: any,
-    closers?: ModelClause<Model>,
-    order?: OrderBy<Model>,
-    scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
+    params?: ContextParams<Model>
   ): Promise<InstanceType<Model> | null>
 
   /**
@@ -87,18 +85,16 @@ export type PaginateContractType<Model extends LucidModel> =
 /**
  * Interfaces
  */
-export interface ListParams<Model extends LucidModel> {
+
+export interface ContextParams<Model extends LucidModel> {
   clauses?: ModelClause<Model>
   order?: OrderBy<Model>
   scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
 }
 
-export interface PaginateParams<Model extends LucidModel> {
+export interface PaginateParams<Model extends LucidModel> extends ContextParams<Model> {
   page: number
   perPage: number
-  clauses?: ModelClause<Model>
-  order?: OrderBy<Model>
-  scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
 }
 
 export interface ModelClause<Model extends LucidModel> {

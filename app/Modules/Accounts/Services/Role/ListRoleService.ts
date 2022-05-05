@@ -20,6 +20,7 @@ export class ListRoleService {
       },
       scope: (scope) => {
         scope.searchQueryScope(search)
+        scope.loadPermissions()
       },
     })
   }

@@ -1,11 +1,12 @@
 import { inject, injectable } from 'tsyringe'
 
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
+import Role from 'App/Modules/Accounts/Models/Role'
 
 import NotFoundException from 'App/Shared/Exceptions/NotFoundException'
+import BadRequestException from 'App/Shared/Exceptions/BadRequestException'
 
 import DTOs = IRole.DTOs
-import BadRequestException from 'App/Shared/Exceptions/BadRequestException'
 
 @injectable()
 export class EditRoleService {
@@ -14,7 +15,7 @@ export class EditRoleService {
     private rolesRepository: IRole.Repository
   ) {}
 
-  public async run(roleId: string, data: DTOs.Edit) {
+  public async run(roleId: string, data: DTOs.Edit): Promise<Role> {
     const role = await this.rolesRepository.findBy('id', roleId)
     if (!role) throw new NotFoundException('Role not found or not available.')
     if (!role.deletable) throw new BadRequestException('Can not update role.')

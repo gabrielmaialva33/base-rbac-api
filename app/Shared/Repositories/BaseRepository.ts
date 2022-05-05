@@ -1,10 +1,9 @@
-import { ExtractScopes, LucidModel } from '@ioc:Adonis/Lucid/Orm'
+import { LucidModel } from '@ioc:Adonis/Lucid/Orm'
 
 import IBaseRepository, {
-  ListParams,
+  ContextParams,
   ModelClause,
   ModelType,
-  OrderBy,
   PaginateContractType,
   PaginateParams,
 } from 'App/Shared/Interfaces/BaseInterface'
@@ -15,7 +14,7 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
   /**
    * Repository
    */
-  public async list({ clauses, order }: ListParams<Model>): Promise<Array<InstanceType<Model>>> {
+  public async list({ clauses, order }: ContextParams<Model>): Promise<Array<InstanceType<Model>>> {
     const models = this.orm.query()
 
     if (clauses)
@@ -79,28 +78,32 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
   public async findBy(
     key: string,
     value: any,
-    clauses?: ModelClause<Model>,
-    order?: OrderBy<Model>,
-    scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
+    params?: ContextParams<Model>
   ): Promise<InstanceType<Model> | null> {
     const model = this.orm.query()
     model.where(key, value)
 
-    if (clauses)
-      Object.entries(clauses).find(([key, value]) => {
-        if (key === 'where') model.where(value)
-        if (key === 'like') {
-          const { column, match } = value
-          if (column && match) model.where(column, 'LIKE', `%${match}%`)
-        }
-      })
+    if (params) {
+      const { clauses, order, scope } = params
 
-    if (order) {
-      const { column, direction } = order
-      if (column) model.orderBy(String(column), direction ? direction : 'asc')
+      if (clauses)
+        Object.entries(clauses).find(([key, value]: [string, any]) => {
+          if (key === 'where') {
+            if (value) model.where(value)
+          }
+          if (key === 'like') {
+            const { column, match } = value
+            if (column && match) model.where(column, 'LIKE', `%${match}%`)
+          }
+        })
+
+      if (order) {
+        const { column, direction } = order
+        if (column) model.orderBy(String(column), direction ? direction : 'asc')
+      }
+
+      if (scope) model.withScopes(scope)
     }
-
-    if (scope) model.withScopes(scope)
 
     return model.first()
   }

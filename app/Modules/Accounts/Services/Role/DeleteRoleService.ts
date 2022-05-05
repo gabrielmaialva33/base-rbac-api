@@ -24,6 +24,7 @@ export class DeleteRoleService {
       is_deleted: true,
       deleted_at: DateTime.now(),
     })
+
     await this.rolesRepository.save(role)
   }
 }
