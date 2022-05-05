@@ -13,9 +13,14 @@ export const OperationsDefault: Array<ModelType<typeof Operation>> = [
     method: 'POST',
   },
   {
+    slug: 'Update',
+    name: 'update',
+    method: 'PUT',
+  },
+  {
     slug: 'Edit',
     name: 'edit',
-    method: 'PUT',
+    method: 'PATCH',
   },
   {
     slug: 'Delete',
