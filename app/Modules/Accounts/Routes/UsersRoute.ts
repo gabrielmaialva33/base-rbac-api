@@ -1,6 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-import UsersController from 'App/Modules/Accounts/Controllers/Http/Admin/UsersController'
+import AuthController from 'App/Modules/Accounts/Controllers/Http/AuthController'
+import UsersController from 'App/Modules/Accounts/Controllers/Http/UsersController'
 
 Route.group(() => {
   Route.get('/', new UsersController().list).as('user.list')
@@ -11,3 +12,7 @@ Route.group(() => {
 })
   .prefix('users')
   .middleware(['auth', 'rbac:root,admin'])
+
+Route.group(() => {
+  Route.post('/login', new AuthController().store).as('auth.store')
+})

@@ -1,5 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
-import RolesController from 'App/Modules/Accounts/Controllers/Http/Admin/RolesController'
+import RolesController from 'App/Modules/Accounts/Controllers/Http/RolesController'
 
 Route.group(() => {
   Route.get('/', new RolesController().list).as('roles.list')
