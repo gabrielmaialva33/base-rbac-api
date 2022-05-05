@@ -4,7 +4,7 @@ import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
 import { IPermission } from 'App/Modules/Accounts/Interfaces/IPermission'
 import { IOperation } from 'App/Modules/Accounts/Interfaces/IOperation'
 
-import { RootRolePermissions } from 'App/Modules/Accounts/Defaults/PermissionsDefault'
+import { PermissionsDefault } from 'App/Modules/Accounts/Defaults/PermissionsDefault'
 
 @injectable()
 export class DefaultRootPermissionService {
@@ -18,8 +18,8 @@ export class DefaultRootPermissionService {
   ) {}
 
   public async run(): Promise<void> {
-    for (let i = 0; i < RootRolePermissions.length; i++) {
-      const { resource, action, methods, roleName } = RootRolePermissions[i]
+    for (let i = 0; i < PermissionsDefault.length; i++) {
+      const { resource, action, methods, roleName } = PermissionsDefault[i]
       const role = await this.rolesRepository.findBy('name', roleName)
       if (role) {
         const permission = await this.permissionsRepository.store({ resource, action })

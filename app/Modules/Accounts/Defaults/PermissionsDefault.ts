@@ -7,13 +7,17 @@ type DefaultType = ModelType<typeof Permission> & {
   methods: Array<string>
 }
 
-export const RootRolePermissions: Array<DefaultType> = [
+export const PermissionsDefault: Array<DefaultType> = [
   {
     resource: 'roles',
     action: 'ALLOW',
     roleName: 'root',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   },
+  {
+    resource: 'operations',
+    action: 'ALLOW',
+    roleName: 'root',
+    methods: ['GET'],
+  },
 ]
-
-export const PermissionsDefault: Array<DefaultType> = []
