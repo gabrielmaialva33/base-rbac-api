@@ -5,8 +5,8 @@ import { DefaultRootPermissionService } from 'App/Modules/Accounts/Services/Perm
 
 export default class CreateDefaultPermissions extends BaseSchema {
   public async up() {
-    const storeRootPermissions = container.resolve(DefaultRootPermissionService)
-    await storeRootPermissions.run()
+    const storePermission = container.resolve(DefaultRootPermissionService)
+    await storePermission.run()
   }
 
   public async down() {

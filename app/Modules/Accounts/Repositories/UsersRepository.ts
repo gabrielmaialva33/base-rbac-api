@@ -1,4 +1,5 @@
 import BaseRepository from 'App/Shared/Repositories/BaseRepository'
+
 import { IUser } from 'App/Modules/Accounts/Interfaces/IUser'
 import User from 'App/Modules/Accounts/Models/User'
 

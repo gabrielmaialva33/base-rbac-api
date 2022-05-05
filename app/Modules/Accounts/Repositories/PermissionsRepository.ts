@@ -10,4 +10,15 @@ export default class PermissionsRepository
   constructor() {
     super(Permission)
   }
+
+  public async attachOperations(
+    permission: Permission,
+    ids: Array<string | number>
+  ): Promise<void> {
+    return permission.related('operations').attach(ids)
+  }
+
+  public async syncOperations(permission: Permission, ids: Array<string | number>): Promise<void> {
+    return permission.related('operations').sync(ids)
+  }
 }

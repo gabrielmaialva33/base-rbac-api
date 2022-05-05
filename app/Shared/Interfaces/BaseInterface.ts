@@ -17,7 +17,7 @@ export default interface BaseInterface<Model extends LucidModel> extends Helpers
   /**
    * Fetch all rows with clauses
    */
-  list(params: ListParams<Model>): Promise<Array<InstanceType<Model>>>
+  list(params?: ListParams<Model>): Promise<Array<InstanceType<Model>>>
 
   /**
    * Create model and return its instance back

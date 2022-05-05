@@ -3,26 +3,18 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import AuthorizationException from 'App/Shared/Exceptions/AuthorizationException'
 
 export default class Rbac {
-  public async handle(
-    { request, auth }: HttpContextContract,
-    next: () => Promise<void>,
-    allowedRoles: Array<string>
-  ) {
-    if (Array.isArray(allowedRoles) === false)
-      throw new AuthorizationException('User not authorized.')
-
+  public async handle({ request, auth }: HttpContextContract, next: () => Promise<void>) {
     const user = await auth.authenticate()
-    await user.load('roles', (builder) => builder.preload('permissions'))
 
-    const roles = user.roles.map((role) => {
-      return role
-    })
+    await user.load('roles', (builder) =>
+      builder.preload('permissions', (builder) => builder.preload('operations'))
+    )
+    const roles = user.roles.map((role) => role)
 
     for (const role of roles) {
-      if (!allowedRoles.includes(role.name))
-        throw new AuthorizationException('User not authorized.')
-
-      const permission = role.permissions.find((p) => p.method === request.method())
+      const permission = role.permissions.find((p) =>
+        p.operations.find((o) => o.method === request.method())
+      )
       if (!permission) throw new AuthorizationException('User not authorized.')
 
       if (permission.action === 'DENY') throw new AuthorizationException('User not authorized.')

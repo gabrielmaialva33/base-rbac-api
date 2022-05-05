@@ -11,8 +11,7 @@ export default class DefaultRolesService {
   ) {}
 
   public async run(): Promise<void> {
-    for (let i = 0; i < RolesDefault.length; i++) {
+    for (let i = 0; i < RolesDefault.length; i++)
       await this.rolesRepository.findOrStore({ name: RolesDefault[i].name }, RolesDefault[i])
-    }
   }
 }

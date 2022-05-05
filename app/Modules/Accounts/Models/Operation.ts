@@ -1,11 +1,10 @@
+import { column } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
-import { column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
-import Operation from 'App/Modules/Accounts/Models/Operation'
 
-export default class Permission extends BaseModel {
-  public static table = 'permissions'
+export default class Operation extends BaseModel {
+  public static table = 'operations'
 
   /**
    * ------------------------------------------------------
@@ -16,14 +15,14 @@ export default class Permission extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column()
-  public resource: string
-
-  @column()
-  public action: string
-
   @column({ serializeAs: null })
-  public is_deleted: boolean
+  public name: string
+
+  @column()
+  public slug: string
+
+  @column()
+  public method: string
 
   @column.dateTime({ autoCreate: true, serializeAs: null })
   public created_at: DateTime
@@ -31,23 +30,13 @@ export default class Permission extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updated_at: DateTime
 
-  @column.dateTime({ autoUpdate: true, serializeAs: null })
-  public deleted_at: DateTime
-
   /**
    * ------------------------------------------------------
    * Relationships
    * ------------------------------------------------------
    * - define User model relationships
    */
-  @manyToMany(() => Operation, {
-    localKey: 'id',
-    pivotForeignKey: 'permission_id',
-    relatedKey: 'id',
-    pivotRelatedForeignKey: 'operation_id',
-    pivotTable: 'permissions_operations',
-  })
-  public operations: ManyToMany<typeof Operation>
+
   /**
    * ------------------------------------------------------
    * Hooks

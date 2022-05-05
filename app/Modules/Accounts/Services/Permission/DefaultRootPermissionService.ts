@@ -1,7 +1,8 @@
 import { inject, injectable } from 'tsyringe'
 
-import { IPermission } from 'App/Modules/Accounts/Interfaces/IPermission'
 import { IRole } from 'App/Modules/Accounts/Interfaces/IRole'
+import { IPermission } from 'App/Modules/Accounts/Interfaces/IPermission'
+import { IOperation } from 'App/Modules/Accounts/Interfaces/IOperation'
 
 import { RootRolePermissions } from 'App/Modules/Accounts/Defaults/PermissionsDefault'
 
@@ -11,15 +12,26 @@ export class DefaultRootPermissionService {
     @inject('RolesRepository')
     private rolesRepository: IRole.Repository,
     @inject('PermissionsRepository')
-    private permissionsRepository: IPermission.Repository
+    private permissionsRepository: IPermission.Repository,
+    @inject('OperationsRepository')
+    private operationsRepository: IOperation.Repository
   ) {}
 
   public async run(): Promise<void> {
-    const rootRole = await this.rolesRepository.findBy('name', 'root')
-    if (rootRole) {
-      const permissions = await this.permissionsRepository.storeMany(RootRolePermissions)
-      const ids = permissions.map(({ id }) => id)
-      await this.rolesRepository.attachPermissions(rootRole, ids)
+    for (let i = 0; i < RootRolePermissions.length; i++) {
+      const { resource, action, methods, roleName } = RootRolePermissions[i]
+      const role = await this.rolesRepository.findBy('name', roleName)
+      if (role) {
+        const permission = await this.permissionsRepository.store({ resource, action })
+
+        for (let method of methods) {
+          const operation = await this.operationsRepository.findBy('method', method)
+          if (operation)
+            await this.permissionsRepository.attachOperations(permission, [operation.id])
+        }
+
+        await this.rolesRepository.attachPermissions(role, [permission.id])
+      }
     }
   }
 }

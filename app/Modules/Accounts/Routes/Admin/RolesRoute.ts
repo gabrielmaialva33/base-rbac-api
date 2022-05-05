@@ -9,4 +9,4 @@ Route.group(() => {
   Route.delete('/:id', new RolesController().delete).as('roles.delete')
 })
   .prefix('roles')
-  .middleware(['auth', 'rbac:root,admin'])
+  .middleware(['auth', 'rbac'])

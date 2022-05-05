@@ -1,5 +1,5 @@
-import Role from 'App/Modules/Accounts/Models/Role'
 import { ModelType } from 'App/Shared/Interfaces/BaseInterface'
+import Role from 'App/Modules/Accounts/Models/Role'
 
 export const RolesDefault: Array<ModelType<typeof Role>> = [
   {
