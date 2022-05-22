@@ -9,7 +9,19 @@ type DefaultType = ModelType<typeof Permission> & {
 
 export const PermissionsDefault: Array<DefaultType> = [
   {
+    resource: 'operations',
+    action: 'ALLOW',
+    methods: ['GET'],
+    roleName: 'root',
+  },
+  {
     resource: 'roles',
+    action: 'ALLOW',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    roleName: 'root',
+  },
+  {
+    resource: 'users',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'root',
@@ -18,7 +30,7 @@ export const PermissionsDefault: Array<DefaultType> = [
     resource: 'operations',
     action: 'ALLOW',
     methods: ['GET'],
-    roleName: 'root',
+    roleName: 'admin',
   },
   {
     resource: 'roles',
@@ -27,9 +39,9 @@ export const PermissionsDefault: Array<DefaultType> = [
     roleName: 'admin',
   },
   {
-    resource: 'operations',
+    resource: 'users',
     action: 'ALLOW',
-    methods: ['GET'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'admin',
   },
 ]
