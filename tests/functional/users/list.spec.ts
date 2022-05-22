@@ -1,10 +1,16 @@
 import { test } from '@japa/runner'
 
 import { UserFactory } from 'Database/factories'
-
+import RolesRepository from 'App/Modules/Accounts/Repositories/RolesRepository'
+const roleRepository = new RolesRepository()
 test.group('User:List', () => {
   test('it should be able to list users with pagination', async ({ client, assert }) => {
-    await UserFactory.createMany(10)
+    /** create many users */
+    const users = await UserFactory.createMany(10)
+    const role = await roleRepository.findBy('name', 'user')
+    if (role) for (const user of users) user.related('roles').attach([role.id])
+
+    assert.isObject(role)
 
     const response = await client.get('/users').qs({
       page: 2,

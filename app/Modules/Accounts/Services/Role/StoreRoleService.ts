@@ -13,7 +13,6 @@ export class StoreRoleService {
   ) {}
 
   public async run(data: DTOs.Store): Promise<Role> {
-    const name = data.slug.toLowerCase()
-    return this.rolesRepository.store({ ...data, name })
+    return this.rolesRepository.store(data)
   }
 }

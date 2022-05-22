@@ -15,8 +15,8 @@ export class ListUserService {
     return this.usersRepository.listWithPagination({
       page,
       perPage,
-      scope: (scope) => {
-        scope.searchQueryScope(search)
+      scopes: (scopes) => {
+        scopes.searchQueryScope(search)
       },
     })
   }

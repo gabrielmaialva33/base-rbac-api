@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import {
+  beforeSave,
   column,
   ManyToMany,
   manyToMany,
@@ -69,6 +70,10 @@ export default class Role extends BaseModel {
    * Hooks
    * ------------------------------------------------------
    */
+  @beforeSave()
+  public static lowerName(role: Role): void {
+    if (role.$dirty.slug) role.name = role.slug.toLowerCase()
+  }
 
   /**
    * ------------------------------------------------------

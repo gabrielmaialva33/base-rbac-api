@@ -14,8 +14,8 @@ export class GetRoleService {
 
   public async run(roleId): Promise<Role> {
     const role = await this.rolesRepository.findBy('id', roleId, {
-      scope: (scope) => {
-        scope.loadPermissionsAndOperations()
+      scopes: (scopes) => {
+        scopes.loadPermissionsAndOperations()
       },
     })
     if (!role) throw new NotFoundException('Role not found or not available.')

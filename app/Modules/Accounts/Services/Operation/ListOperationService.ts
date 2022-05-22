@@ -12,9 +12,11 @@ export class ListOperationService {
 
   public async run(): Promise<Array<Operation>> {
     return this.operationsRepository.list({
-      order: {
-        column: 'slug',
-      },
+      orders: [
+        {
+          column: 'slug',
+        },
+      ],
     })
   }
 }
