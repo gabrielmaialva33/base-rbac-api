@@ -14,15 +14,16 @@ export class ListRoleService {
   ) {}
 
   public async run({ page = 1, perPage = 10, search = '' }: DTOs.List) {
-    const request = HttpContext.get()!
-    const user = request.auth.user
+    const ctx = HttpContext.get()!
+
+    const user = ctx.auth.user
     if (!user) throw new NotFoundException('User not found or not available.')
 
     return this.rolesRepository.listWithPagination({
       page,
       perPage,
       scopes: (scopes) => {
-        scopes.onlyAdminContext()
+        if (!user.isRoot()) scopes.onlyAdminContext()
         scopes.searchQueryScope(search)
         scopes.loadPermissions()
       },

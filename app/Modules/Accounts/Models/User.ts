@@ -103,4 +103,8 @@ export default class User extends BaseModel {
   public get full_name() {
     return `${this.first_name} ${this.last_name}`
   }
+
+  public isRoot(): boolean {
+    return !!this.roles.find((role) => role.name === 'root')
+  }
 }
