@@ -15,13 +15,16 @@ export class ListRoleService {
     return this.rolesRepository.listWithPagination({
       page,
       perPage,
-      order: {
-        column: 'slug',
+      scopes: (scopes) => {
+        scopes.searchQueryScope(search)
+        scopes.loadPermissions()
       },
-      scope: (scope) => {
-        scope.searchQueryScope(search)
-        scope.loadPermissions()
-      },
+      orders: [
+        {
+          column: 'slug',
+          direction: 'asc',
+        },
+      ],
     })
   }
 }

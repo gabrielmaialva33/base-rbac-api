@@ -85,11 +85,10 @@ export type PaginateContractType<Model extends LucidModel> =
 /**
  * Interfaces
  */
-
 export interface ContextParams<Model extends LucidModel> {
   clauses?: ModelClause<Model>
-  order?: OrderBy<Model>
-  scope?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
+  orders?: Array<OrderBy<Model>>
+  scopes?: <Scopes extends ExtractScopes<Model>>(scopes: Scopes) => void
 }
 
 export interface PaginateParams<Model extends LucidModel> extends ContextParams<Model> {

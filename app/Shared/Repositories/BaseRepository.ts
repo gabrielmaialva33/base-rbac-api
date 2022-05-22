@@ -14,7 +14,10 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
   /**
    * Repository
    */
-  public async list({ clauses, order }: ContextParams<Model>): Promise<Array<InstanceType<Model>>> {
+  public async list({
+    clauses,
+    orders,
+  }: ContextParams<Model>): Promise<Array<InstanceType<Model>>> {
     const models = this.orm.query()
 
     if (clauses)
@@ -26,9 +29,9 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
         }
       })
 
-    if (order) {
-      const { column, direction } = order
-      if (column) models.orderBy(String(column), direction ? direction : 'asc')
+    if (orders) {
+      for (const { column, direction } of orders)
+        if (column) models.orderBy(String(column), direction ? direction : 'asc')
     }
 
     return models
@@ -49,11 +52,13 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
   /**
    * Helpers
    */
-  public async listWithPagination(
-    params: PaginateParams<Model>
-  ): Promise<PaginateContractType<Model>> {
-    const { page, perPage, clauses, order, scope } = params
-
+  public async listWithPagination({
+    page,
+    perPage,
+    clauses,
+    orders,
+    scopes,
+  }: PaginateParams<Model>): Promise<PaginateContractType<Model>> {
     const models = this.orm.query()
 
     if (clauses)
@@ -65,11 +70,11 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
         }
       })
 
-    if (scope) models.withScopes(scope)
+    if (scopes) models.withScopes(scopes)
 
-    if (order) {
-      const { column, direction } = order
-      if (column) models.orderBy(String(column), direction ? direction : 'asc')
+    if (orders) {
+      for (const { column, direction } of orders)
+        if (column) models.orderBy(String(column), direction ? direction : 'asc')
     }
 
     return models.paginate(page, perPage)
@@ -84,7 +89,7 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
     model.where(key, value)
 
     if (params) {
-      const { clauses, order, scope } = params
+      const { clauses, orders, scopes } = params
 
       if (clauses)
         Object.entries(clauses).find(([key, value]: [string, any]) => {
@@ -97,12 +102,12 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
           }
         })
 
-      if (order) {
-        const { column, direction } = order
-        if (column) model.orderBy(String(column), direction ? direction : 'asc')
-      }
+      if (scopes) model.withScopes(scopes)
 
-      if (scope) model.withScopes(scope)
+      if (orders) {
+        for (const { column, direction } of orders)
+          if (column) model.orderBy(String(column), direction ? direction : 'asc')
+      }
     }
 
     return model.first()
