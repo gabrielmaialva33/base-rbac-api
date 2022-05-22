@@ -91,6 +91,10 @@ export default class Role extends BaseModel {
     return query.whereRaw(`(${sql})`)
   })
 
+  public static onlyAdminContext = scope((query: ModelQueryBuilderContract<typeof Role>) => {
+    query.andWhereNot('name', 'root')
+  })
+
   public static loadPermissions = scope((query: ModelQueryBuilderContract<typeof Role>) => {
     query.preload('permissions')
   })

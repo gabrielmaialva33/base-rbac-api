@@ -27,13 +27,13 @@ export const PermissionsDefault: Array<DefaultType> = [
     roleName: 'root',
   },
   {
-    resource: 'operations',
+    resource: 'roles',
     action: 'ALLOW',
     methods: ['GET'],
     roleName: 'admin',
   },
   {
-    resource: 'roles',
+    resource: 'users',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'admin',
@@ -42,6 +42,6 @@ export const PermissionsDefault: Array<DefaultType> = [
     resource: 'users',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    roleName: 'admin',
+    roleName: 'user',
   },
 ]
