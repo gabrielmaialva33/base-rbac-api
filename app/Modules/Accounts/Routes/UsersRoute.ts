@@ -5,7 +5,7 @@ import UsersController from 'App/Modules/Accounts/Controllers/Http/UsersControll
 
 Route.group(() => {
   Route.get('/', new UsersController().list).as('user.list')
-  Route.get('/:id', new UsersController().show).as('user.show')
+  Route.get('/:id', new UsersController().get).as('user.get')
   Route.post('/', new UsersController().store).as('user.store')
   Route.put('/:id', new UsersController().edit).as('user.edit')
   Route.delete('/:id', new UsersController().delete).as('user.delete')

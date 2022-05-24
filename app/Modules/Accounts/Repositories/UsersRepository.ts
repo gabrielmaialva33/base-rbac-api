@@ -11,11 +11,11 @@ export default class UsersRepository
     super(User)
   }
 
-  public async attachRoles(user: User, ids: Array<string | number>): Promise<void> {
+  public async attachRoles(user: User, ids: Array<string>): Promise<void> {
     return user.related('roles').attach(ids)
   }
 
-  public async syncRoles(user: User, ids: Array<string | number>): Promise<void> {
+  public async syncRoles(user: User, ids: Array<string>): Promise<void> {
     return user.related('roles').sync(ids)
   }
 }

@@ -23,7 +23,7 @@ export default class RolesController {
     return response.json(roles)
   }
 
-  public async show({ request, params, response }: HttpContextContract): Promise<void> {
+  public async get({ request, params, response }: HttpContextContract): Promise<void> {
     const { id: roleId } = params
 
     await request.validate(Validator.UUID(roleId))

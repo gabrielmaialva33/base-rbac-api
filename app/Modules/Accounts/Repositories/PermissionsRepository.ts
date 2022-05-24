@@ -11,14 +11,11 @@ export default class PermissionsRepository
     super(Permission)
   }
 
-  public async attachOperations(
-    permission: Permission,
-    ids: Array<string | number>
-  ): Promise<void> {
+  public async attachOperations(permission: Permission, ids: Array<string>): Promise<void> {
     return permission.related('operations').attach(ids)
   }
 
-  public async syncOperations(permission: Permission, ids: Array<string | number>): Promise<void> {
+  public async syncOperations(permission: Permission, ids: Array<string>): Promise<void> {
     return permission.related('operations').sync(ids)
   }
 }

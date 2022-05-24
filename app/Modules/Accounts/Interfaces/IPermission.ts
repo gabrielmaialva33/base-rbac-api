@@ -5,14 +5,33 @@ export namespace IPermission {
   export interface Repository extends BaseInterface<typeof Permission>, Helpers {}
 
   export interface Helpers {
-    attachOperations(permission: Permission, ids: Array<string | number>): Promise<void>
+    attachOperations(permission: Permission, ids: Array<string>): Promise<void>
 
-    syncOperations(permission: Permission, ids: Array<string | number>): Promise<void>
+    syncOperations(permission: Permission, ids: Array<string>): Promise<void>
+  }
+
+  export enum ActionType {
+    allow = 'ALLOW',
+    deny = 'DENY',
   }
 
   export namespace DTOs {
-    export interface Store {}
+    export type List = {
+      page: number
+      perPage: number
+      search: string
+    }
 
-    export interface Edit {}
+    export type Store = {
+      resource: string
+      action: ActionType
+      operations: Array<string>
+    }
+
+    export type Edit = {
+      resource?: string
+      action?: ActionType
+      operations?: Array<string>
+    }
   }
 }

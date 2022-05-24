@@ -11,11 +11,11 @@ export default class RolesRepository
     super(Role)
   }
 
-  public async attachPermissions(role: Role, ids: Array<string | number>): Promise<void> {
+  public async attachPermissions(role: Role, ids: Array<string>): Promise<void> {
     return role.related('permissions').attach(ids)
   }
 
-  public async syncPermissions(role: Role, ids: Array<string | number>): Promise<void> {
+  public async syncPermissions(role: Role, ids: Array<string>): Promise<void> {
     return role.related('permissions').sync(ids)
   }
 }

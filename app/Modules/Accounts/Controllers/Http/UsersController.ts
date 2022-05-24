@@ -23,7 +23,7 @@ export default class UsersController {
     return response.json(users)
   }
 
-  public async show({ request, params, response }: HttpContextContract): Promise<void> {
+  public async get({ request, params, response }: HttpContextContract): Promise<void> {
     const { id: userId } = params
     await request.validate(Validator.UUID(userId))
 

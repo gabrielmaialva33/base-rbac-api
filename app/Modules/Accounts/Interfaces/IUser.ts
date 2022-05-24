@@ -5,9 +5,9 @@ export namespace IUser {
   export interface Repository extends BaseInterface<typeof User>, Helpers {}
 
   interface Helpers {
-    attachRoles(user: User, ids: Array<string | number>): Promise<void>
+    attachRoles(user: User, ids: Array<string>): Promise<void>
 
-    syncRoles(user: User, ids: Array<string | number>): Promise<void>
+    syncRoles(user: User, ids: Array<string>): Promise<void>
   }
 
   export namespace DTOs {

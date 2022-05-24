@@ -3,7 +3,7 @@ import RolesController from 'App/Modules/Accounts/Controllers/Http/RolesControll
 
 Route.group(() => {
   Route.get('/', new RolesController().list).as('roles.list')
-  Route.get('/:id', new RolesController().show).as('roles.show')
+  Route.get('/:id', new RolesController().get).as('roles.get')
   Route.post('/', new RolesController().store).as('roles.store')
   Route.put('/:id', new RolesController().edit).as('roles.edit')
   Route.delete('/:id', new RolesController().delete).as('roles.delete')

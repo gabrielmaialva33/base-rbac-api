@@ -5,9 +5,9 @@ export namespace IRole {
   export interface Repository extends BaseInterface<typeof Role>, Helpers {}
 
   interface Helpers {
-    attachPermissions(role: Role, ids: Array<string | number>): Promise<void>
+    attachPermissions(role: Role, ids: Array<string>): Promise<void>
 
-    syncPermissions(role: Role, ids: Array<string | number>): Promise<void>
+    syncPermissions(role: Role, ids: Array<string>): Promise<void>
   }
 
   export namespace DTOs {
@@ -21,6 +21,7 @@ export namespace IRole {
       slug: string
       description: string
       is_active?: boolean
+      permissions_ids: Array<string>
     }
 
     export interface Edit {
