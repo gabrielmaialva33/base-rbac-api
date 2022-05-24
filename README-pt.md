@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/github/languages/top/gabrielmaialva33/base-rbac-api?style=flat&logo=appveyor" alt="GitHub top language" >
   <img src="https://img.shields.io/github/languages/count/gabrielmaialva33/base-rbac-api?style=flat&logo=appveyor" alt="GitHub language count" >
   <img src="https://img.shields.io/github/repo-size/gabrielmaialva33/base-rbac-api?style=flat&logo=appveyor" alt="Repository size" >
-  <img src="https://wakatime.com/badge/user/e61842d0-c588-4586-96a3-f0448a434be4/project/b75a91f3-277e-46c8-a7cc-f3977f55cd93.svg" alt="Wakatime" >
+  <img src="https://wakatime.com/badge/user/e61842d0-c588-4586-96a3-f0448a434be4/project/b75a91f3-277e-46c8-a7cc-f3977f55cd93.svg?style=flat&logo=appveyor" alt="Wakatime" >
   <a href="https://github.com/gabrielmaialva33/base-rbac-api/commits/master">
     <img src="https://img.shields.io/github/last-commit/gabrielmaialva33/base-rbac-api?style=flat&logo=appveyor" alt="GitHub last commit" >
     <img src="https://img.shields.io/badge/feito%20por-Maia-15c3d6?style=flat&logo=appveyor" alt="Maia" >
