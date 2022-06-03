@@ -38,7 +38,7 @@
     "printWidth": 100
   },
   "devDependencies": {
-    "@adonisjs/assembler": "^5.6.2",
+    "@adonisjs/assembler": "^5.7.0",
     "@japa/preset-adonis": "^1.0.16",
     "@japa/runner": "^2.0.8",
     "adonis-preset-ts": "^2.1.0",
@@ -47,25 +47,25 @@
     "eslint-plugin-adonis": "^2.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "openapi-types": "^11.0.1",
-    "pino-pretty": "^7.6.1",
+    "pino-pretty": "^8.0.0",
     "prettier": "^2.6.2",
-    "typescript": "^4.6.4",
+    "typescript": "^4.7.2",
     "yarn-upgrade-all": "^0.7.1",
     "youch": "^3.2.0",
     "youch-terminal": "^2.1.4"
   },
   "dependencies": {
-    "@adonisjs/auth": "^8.1.0",
-    "@adonisjs/core": "^5.8.2",
-    "@adonisjs/lucid": "^17.2.0",
+    "@adonisjs/auth": "^8.2.1",
+    "@adonisjs/core": "^5.8.3",
+    "@adonisjs/lucid": "^18.0.1",
     "@adonisjs/redis": "^7.3.0",
-    "@adonisjs/repl": "^3.1.10",
+    "@adonisjs/repl": "^3.1.11",
     "luxon": "^2.4.0",
     "pg": "^8.7.3",
     "phc-argon2": "^1.1.3",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21",
-    "tsyringe": "^4.6.0"
+    "tsyringe": "^4.7.0"
   }
 }
