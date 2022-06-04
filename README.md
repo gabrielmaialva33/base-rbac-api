@@ -37,7 +37,7 @@
 **Base RBAC** is a role-based access control base api that hopes to serve many projects.
 
 <kbd>
-  <img src=".github/assets/images/schema.svg" alt="schema">
+  <img src=".github/assets/images/schema.png" alt="schema">
 </kbd>
 
 <br>
