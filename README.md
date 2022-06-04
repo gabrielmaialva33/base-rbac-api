@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src=".github/assets/images/img1.png" height="200" alt="rbac">
+  <img src=".github/assets/images/img1.png" height="200" alt="RBAC">
 </h1>
 
 <p align="center">

@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src=".github/assets/images/img1.png" height="200px" alt="TKC">
+  <img src=".github/assets/images/img1.png" height="200px" alt="RBAC">
 </h1>
 
 <p align="center">
@@ -102,7 +102,7 @@ Os seguintes softwares devem estar instalados:
 
 ## :twisted_rightwards_arrows: Rotas
 
-Arquivo de rotas [Donwload](https://raw.githubusercontent.com/gabrielmaialva33/mindset-tkc-api/master/.github/assets/insomnia/Insomnia.json.zip)
+Arquivo de rotas [Donwload](https://raw.githubusercontent.com/gabrielmaialva33/base-rbac-api/master/.github/assets/insomnia/Insomnia.json.zip)
 
 ## :memo: Licença
 
