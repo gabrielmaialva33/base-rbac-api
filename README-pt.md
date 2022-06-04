@@ -36,6 +36,10 @@
 
 **Base RBAC** é uma API base de controle de acesso baseada em função que espera atender a muitos projetos.
 
+<kbd>
+  <img src=".github/assets/images/schema.png" alt="schema">
+</kbd>
+
 <br>
 
 ## :computer: Tecnologias

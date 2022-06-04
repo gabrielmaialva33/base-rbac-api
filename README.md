@@ -40,7 +40,6 @@
   <img src=".github/assets/images/schema.svg" alt="schema">
 </kbd>
 
-
 <br>
 
 ## :computer: Technologies
