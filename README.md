@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src=".github/assets/images/img1.png" height="200" alt="TKC">
+  <img src=".github/assets/images/img1.png" height="200" alt="rbac">
 </h1>
 
 <p align="center">
@@ -35,6 +35,11 @@
 ## :bookmark: About
 
 **Base RBAC** is a role-based access control base api that hopes to serve many projects.
+
+<kbd>
+  <img src=".github/assets/images/schema.svg" alt="schema">
+</kbd>
+
 
 <br>
 
