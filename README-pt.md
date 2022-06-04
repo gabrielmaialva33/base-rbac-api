@@ -100,6 +100,10 @@ Os seguintes softwares devem estar instalados:
 
 <br>
 
+## :twisted_rightwards_arrows: Rotas
+
+Arquivo de rotas [Donwload](https://raw.githubusercontent.com/gabrielmaialva33/mindset-tkc-api/master/.github/assets/insomnia/Insomnia.json.zip)
+
 ## :memo: Licença
 
 O projeto está sobre a licença [MIT](./LICENSE) ❤️

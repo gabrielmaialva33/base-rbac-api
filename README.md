@@ -100,6 +100,10 @@ The following software must be installed:
 
 <br>
 
+## :twisted_rightwards_arrows: Routes
+
+Get routes for insomnia [Donwload](https://raw.githubusercontent.com/gabrielmaialva33/base-rbac-api/master/.github/assets/insomnia/Insomnia.json.zip)
+
 ## :memo: License
 
 This project is under the **MIT** license. [MIT](./LICENSE) ❤️
