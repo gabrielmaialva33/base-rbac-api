@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
+
 import { IPermission } from 'App/Modules/Accounts/Interfaces/IPermission'
 
 export namespace PermissionsValidator {
@@ -9,9 +10,8 @@ export namespace PermissionsValidator {
     constructor(protected ctx: HttpContextContract) {}
 
     public schema = schema.create({
-      resource: schema.string({ escape: true, trim: true }, [
-        rules.minLength(4),
-        rules.maxLength(20),
+      resource_id: schema.string({ escape: true, trim: true }, [
+        rules.exists({ table: 'resources', column: 'id', whereNot: { is_deleted: true } }),
       ]),
       action: schema.enum(Object.values(ActionType), []),
       operations: schema
@@ -30,9 +30,8 @@ export namespace PermissionsValidator {
     constructor(protected ctx: HttpContextContract) {}
 
     public schema = schema.create({
-      resource: schema.string.optional({ escape: true, trim: true }, [
-        rules.minLength(4),
-        rules.maxLength(20),
+      resource_id: schema.string.optional({ escape: true, trim: true }, [
+        rules.exists({ table: 'resources', column: 'id', whereNot: { is_deleted: true } }),
       ]),
       action: schema.enum(Object.values(ActionType), []),
       operations: schema.array

@@ -11,13 +11,13 @@ export namespace IUser {
   }
 
   export namespace DTOs {
-    export interface List {
+    export type List = {
       page: number
       perPage: number
       search: string
     }
 
-    export interface Store {
+    export type Store = {
       first_name: string
       last_name: string
       username: string
@@ -26,7 +26,7 @@ export namespace IUser {
       roles: Array<string>
     }
 
-    export interface Edit {
+    export type Edit = {
       first_name?: string
       last_name?: string
       username?: string

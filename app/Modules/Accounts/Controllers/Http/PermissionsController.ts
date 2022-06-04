@@ -8,16 +8,15 @@ import {
   StorePermissionService,
   EditPermissionService,
 } from 'App/Modules/Accounts/Services/Permission'
-import { PermissionsValidator } from 'App/Modules/Accounts/Validators/Admin/PermissionsValidator'
+import { PermissionsValidator } from 'App/Modules/Accounts/Validators/PermissionsValidator'
 
 export default class PermissionsController {
   public async list({ request, response }: HttpContextContract): Promise<void> {
     const page = request.input('page', 1)
     const perPage = request.input('per_page', 10)
-    const search = request.input('search', '')
 
     const listPermissions = container.resolve(ListPermissionService)
-    const permissions = await listPermissions.run({ page, perPage, search })
+    const permissions = await listPermissions.run({ page, perPage })
 
     return response.json(permissions)
   }

@@ -3,49 +3,56 @@ import { ModelType } from 'App/Shared/Interfaces/BaseInterface'
 import Permission from 'App/Modules/Accounts/Models/Permission'
 
 type DefaultType = ModelType<typeof Permission> & {
+  resourceName: string
   methods: Array<string>
   roleName: string
 }
 
 export const PermissionsDefault: Array<DefaultType> = [
   {
-    resource: 'operations',
+    resourceName: 'operations',
     action: 'ALLOW',
     methods: ['GET'],
     roleName: 'root',
   },
   {
-    resource: 'permissions',
+    resourceName: 'resources',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'root',
   },
   {
-    resource: 'roles',
+    resourceName: 'permissions',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'root',
   },
   {
-    resource: 'users',
+    resourceName: 'roles',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'root',
   },
   {
-    resource: 'roles',
+    resourceName: 'users',
+    action: 'ALLOW',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    roleName: 'root',
+  },
+  {
+    resourceName: 'roles',
     action: 'ALLOW',
     methods: ['GET'],
     roleName: 'admin',
   },
   {
-    resource: 'users',
+    resourceName: 'users',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'admin',
   },
   {
-    resource: 'users',
+    resourceName: 'users',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     roleName: 'user',

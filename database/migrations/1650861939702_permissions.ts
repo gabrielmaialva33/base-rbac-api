@@ -12,7 +12,13 @@ export default class Permissions extends BaseSchema {
       this.schema.createTable(this.tableName, (table) => {
         table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
 
-        table.string('resource', 40).notNullable()
+        table
+          .uuid('resource_id')
+          .references('id')
+          .inTable('resources')
+          .notNullable()
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
 
         table.enu('action', ['ALLOW', 'DENY'], {
           useNative: true,
@@ -20,6 +26,7 @@ export default class Permissions extends BaseSchema {
           existingType: false,
         })
 
+        table.boolean('deletable').notNullable().defaultTo(true)
         table.boolean('is_deleted').notNullable().defaultTo(false)
 
         table.timestamp('created_at', { useTz: true })

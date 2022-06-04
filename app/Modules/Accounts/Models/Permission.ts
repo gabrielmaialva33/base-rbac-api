@@ -1,8 +1,18 @@
 import { DateTime } from 'luxon'
-import { afterFind, column, ManyToMany, manyToMany, scope } from '@ioc:Adonis/Lucid/Orm'
+import {
+  afterFetch,
+  afterFind,
+  afterPaginate,
+  BelongsTo,
+  belongsTo,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
 import Operation from 'App/Modules/Accounts/Models/Operation'
+import Resource from 'App/Modules/Accounts/Models/Resource'
 
 export default class Permission extends BaseModel {
   public static table = 'permissions'
@@ -17,10 +27,13 @@ export default class Permission extends BaseModel {
   public id: string
 
   @column()
-  public resource: string
+  public resource_id: string
 
   @column()
   public action: string
+
+  @column()
+  public deletable: boolean
 
   @column({ serializeAs: null })
   public is_deleted: boolean
@@ -38,8 +51,11 @@ export default class Permission extends BaseModel {
    * ------------------------------------------------------
    * Relationships
    * ------------------------------------------------------
-   * - define User model relationships
+   * - define Permission model relationships
    */
+  @belongsTo(() => Resource, { localKey: 'id', foreignKey: 'resource_id' })
+  public resource: BelongsTo<typeof Resource>
+
   @manyToMany(() => Operation, {
     localKey: 'id',
     pivotForeignKey: 'permission_id',
@@ -48,15 +64,25 @@ export default class Permission extends BaseModel {
     pivotTable: 'permissions_operations',
   })
   public operations: ManyToMany<typeof Operation>
+
   /**
    * ------------------------------------------------------
    * Hooks
    * ------------------------------------------------------
    */
-
   @afterFind()
-  public static async loadOperationsOnGet(permission: Permission) {
+  public static async loadRelationOnGet(permission: Permission) {
+    await permission.load('resource', (builder) => builder.orderBy('name'))
     await permission.load('operations', (builder) => builder.orderBy('slug'))
+  }
+
+  @afterPaginate()
+  @afterFetch()
+  public static async loadRelationsOnList(permissions: Array<Permission>) {
+    for (const permission of permissions) {
+      await permission.load('resource', (builder) => builder.orderBy('name'))
+      await permission.load('operations', (builder) => builder.orderBy('slug'))
+    }
   }
 
   /**
@@ -64,16 +90,7 @@ export default class Permission extends BaseModel {
    * Query Scopes
    * ------------------------------------------------------
    */
-  public static searchQueryScope = scope((query, search) => {
-    const fields = ['resource']
-    let sql = ''
 
-    fields.forEach(
-      (field, i) => (sql = `${sql} ${i !== 0 ? ' or ' : ' '} ${field} like '%${search}%'`)
-    )
-
-    return query.whereRaw(`(${sql})`)
-  })
   /**
    * ------------------------------------------------------
    * Misc

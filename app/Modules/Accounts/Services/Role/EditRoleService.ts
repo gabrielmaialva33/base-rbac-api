@@ -20,9 +20,13 @@ export class EditRoleService {
     if (!role) throw new NotFoundException('Role not found or not available.')
     if (!role.deletable) throw new BadRequestException('Can not update role.')
 
-    role.merge(data)
+    const { permissions, ...roleDto } = data
+
+    role.merge(roleDto)
     await this.rolesRepository.save(role)
 
-    return role
+    if (permissions.length > 0) await this.rolesRepository.syncPermissions(role, permissions)
+
+    return role.refresh()
   }
 }

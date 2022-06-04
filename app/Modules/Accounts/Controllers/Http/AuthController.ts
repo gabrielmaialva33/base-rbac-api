@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-import { UsersValidator as Validator } from 'App/Modules/Accounts/Validators/Admin/UsersValitator'
+import { UsersValidator as Validator } from 'App/Modules/Accounts/Validators/UsersValitator'
 
 import AuthorizationException from 'App/Shared/Exceptions/AuthorizationException'
 

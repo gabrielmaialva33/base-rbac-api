@@ -9,6 +9,9 @@ import RolesRepository from 'App/Modules/Accounts/Repositories/RolesRepository'
 import { IPermission } from 'App/Modules/Accounts/Interfaces/IPermission'
 import PermissionsRepository from 'App/Modules/Accounts/Repositories/PermissionsRepository'
 
+import ResourcesRepository from 'App/Modules/Accounts/Repositories/ResourcesRepository'
+import { IResource } from 'App/Modules/Accounts/Interfaces/IResource'
+
 import { IOperation } from 'App/Modules/Accounts/Interfaces/IOperation'
 import OperationsRepository from 'App/Modules/Accounts/Repositories/OperationsRepository'
 
@@ -20,6 +23,11 @@ container.registerSingleton<IUser.Repository>(
 container.registerSingleton<IRole.Repository>(
   'RolesRepository',
   delay(() => RolesRepository)
+)
+
+container.registerSingleton<IResource.Repository>(
+  'ResourcesRepository',
+  delay(() => ResourcesRepository)
 )
 
 container.registerSingleton<IPermission.Repository>(

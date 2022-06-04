@@ -9,7 +9,7 @@ import {
   DeleteUserService,
 } from 'App/Modules/Accounts/Services/User'
 
-import { UsersValidator as Validator } from 'App/Modules/Accounts/Validators/Admin/UsersValitator'
+import { UsersValidator as Validator } from 'App/Modules/Accounts/Validators/UsersValitator'
 
 export default class UsersController {
   public async list({ request, response }: HttpContextContract): Promise<void> {

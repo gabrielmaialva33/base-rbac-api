@@ -31,4 +31,5 @@ Route.get('/health', async ({ response }) => {
 import 'App/Modules/Accounts/Routes/UsersRoute'
 import 'App/Modules/Accounts/Routes/RolesRoute'
 import 'App/Modules/Accounts/Routes/PermissionsRoute'
+import 'App/Modules/Accounts/Routes/ResourcesRoute'
 import 'App/Modules/Accounts/Routes/OperationsRoutes'

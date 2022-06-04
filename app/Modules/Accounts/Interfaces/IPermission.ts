@@ -19,17 +19,16 @@ export namespace IPermission {
     export type List = {
       page: number
       perPage: number
-      search: string
     }
 
     export type Store = {
-      resource: string
+      resource_id: string
       action: string
       operations: Array<string>
     }
 
     export type Edit = {
-      resource?: string
+      resource_id?: string
       action?: string
       operations?: Array<string>
     }

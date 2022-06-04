@@ -34,7 +34,7 @@ export default class Operation extends BaseModel {
    * ------------------------------------------------------
    * Relationships
    * ------------------------------------------------------
-   * - define User model relationships
+   * - define Operation model relationships
    */
 
   /**

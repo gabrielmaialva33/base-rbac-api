@@ -17,14 +17,13 @@ export class EditPermissionService {
     const permission = await this.permissionsRepository.findBy('id', permissionId)
     if (!permission) throw new NotFoundException('Permission not found or not available.')
 
-    const operations = data.operations
-    delete data.operations
+    const { operations, ...permissionDto } = data
 
-    permission.merge(data)
-
-    if (operations) await this.permissionsRepository.syncOperations(permission, operations)
+    permission.merge(permissionDto)
     await this.permissionsRepository.save(permission)
 
-    return permission
+    if (operations) await this.permissionsRepository.syncOperations(permission, operations)
+
+    return permission.refresh()
   }
 }

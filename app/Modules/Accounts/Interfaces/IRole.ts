@@ -11,23 +11,24 @@ export namespace IRole {
   }
 
   export namespace DTOs {
-    export interface List {
+    export type List = {
       page: number
       perPage: number
       search: string
     }
 
-    export interface Store {
+    export type Store = {
       slug: string
       description: string
       is_active?: boolean
-      permissions_ids: Array<string>
+      permissions: Array<string>
     }
 
-    export interface Edit {
+    export type Edit = {
       slug?: string
       description?: string
       is_active?: boolean
+      permissions: Array<string>
     }
   }
 }

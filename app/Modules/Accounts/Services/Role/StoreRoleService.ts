@@ -13,6 +13,11 @@ export class StoreRoleService {
   ) {}
 
   public async run(data: DTOs.Store): Promise<Role> {
-    return this.rolesRepository.store(data)
+    const { permissions, ...roleDto } = data
+
+    const role = await this.rolesRepository.store(roleDto)
+    if (permissions.length > 0) await this.rolesRepository.attachPermissions(role, permissions)
+
+    return role
   }
 }

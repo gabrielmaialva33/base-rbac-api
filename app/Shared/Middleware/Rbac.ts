@@ -7,12 +7,16 @@ export default class Rbac {
     const user = await auth.authenticate()
 
     await user.load('roles', (builder) =>
-      builder.preload('permissions', (builder) => builder.preload('operations'))
+      builder.preload('permissions', (builder) => {
+        builder.preload('resource')
+        builder.preload('operations')
+      })
     )
 
     const [[permission]] = user.roles.map((role) =>
-      role.permissions.filter((permission) => request.url().includes(permission.resource))
+      role.permissions.filter((permission) => request.url().includes(permission.resource.name))
     )
+
     if (!permission) throw new AuthorizationException('User not authorized.')
     if (permission.action === 'DENY') throw new AuthorizationException('User not authorized.')
 

@@ -11,11 +11,10 @@ export class ListPermissionService {
     private permissionsRepository: IPermission.Repository
   ) {}
 
-  public async run({ page = 1, perPage = 10, search = '' }: DTOs.List) {
+  public async run({ page = 1, perPage = 10 }: DTOs.List) {
     return this.permissionsRepository.listWithPagination({
       page,
       perPage,
-      scopes: (scopes) => scopes.searchQueryScope(search),
     })
   }
 }

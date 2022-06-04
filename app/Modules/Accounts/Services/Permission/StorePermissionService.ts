@@ -13,11 +13,9 @@ export class StorePermissionService {
   ) {}
 
   public async run(data: DTOs.Store): Promise<Permission> {
-    const { resource, action, operations } = data
+    const { operations, ...permissionDto } = data
 
-    const permission = await this.permissionsRepository.store({ resource, action })
-    await this.permissionsRepository.attachOperations(permission, operations)
-
+    const permission = await this.permissionsRepository.store(permissionDto)
     if (operations) await this.permissionsRepository.attachOperations(permission, operations)
 
     return permission

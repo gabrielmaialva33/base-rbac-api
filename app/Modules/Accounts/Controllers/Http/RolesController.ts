@@ -9,7 +9,7 @@ import {
   StoreRoleService,
 } from 'App/Modules/Accounts/Services/Role'
 
-import { RolesValidator as Validator } from 'App/Modules/Accounts/Validators/Admin/RolesValidator'
+import { RolesValidator as Validator } from 'App/Modules/Accounts/Validators/RolesValidator'
 
 export default class RolesController {
   public async list({ request, response }: HttpContextContract): Promise<void> {
