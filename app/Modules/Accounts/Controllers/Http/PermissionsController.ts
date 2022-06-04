@@ -5,7 +5,10 @@ import {
   ListPermissionService,
   GetPermissionService,
   DeletePermissionService,
+  StorePermissionService,
+  EditPermissionService,
 } from 'App/Modules/Accounts/Services/Permission'
+import { PermissionsValidator } from 'App/Modules/Accounts/Validators/Admin/PermissionsValidator'
 
 export default class PermissionsController {
   public async list({ request, response }: HttpContextContract): Promise<void> {
@@ -28,9 +31,24 @@ export default class PermissionsController {
     return response.json(permission)
   }
 
-  public async store({}: HttpContextContract): Promise<void> {}
+  public async store({ request, response }: HttpContextContract): Promise<void> {
+    const permissionDto = await request.validate(PermissionsValidator.StorePermission)
 
-  public async edit({}: HttpContextContract): Promise<void> {}
+    const storePermission = container.resolve(StorePermissionService)
+    const permissions = await storePermission.run(permissionDto)
+
+    return response.json(permissions)
+  }
+
+  public async edit({ request, params, response }: HttpContextContract): Promise<void> {
+    const { id: permissionId } = params
+    const permissionDto = await request.validate(PermissionsValidator.EditPermission)
+
+    const editPermission = container.resolve(EditPermissionService)
+    const permission = await editPermission.run(permissionId, permissionDto)
+
+    return response.json(permission)
+  }
 
   public async delete({ params, response }: HttpContextContract): Promise<void> {
     const { id: permissionId } = params

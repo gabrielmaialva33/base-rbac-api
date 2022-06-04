@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { column, ManyToMany, manyToMany, scope } from '@ioc:Adonis/Lucid/Orm'
+import { afterFind, column, ManyToMany, manyToMany, scope } from '@ioc:Adonis/Lucid/Orm'
 
 import BaseModel from 'App/Shared/Models/BaseModel'
 import Operation from 'App/Modules/Accounts/Models/Operation'
@@ -53,6 +53,11 @@ export default class Permission extends BaseModel {
    * Hooks
    * ------------------------------------------------------
    */
+
+  @afterFind()
+  public static async loadOperationsOnGet(permission: Permission) {
+    await permission.load('operations', (builder) => builder.orderBy('slug'))
+  }
 
   /**
    * ------------------------------------------------------

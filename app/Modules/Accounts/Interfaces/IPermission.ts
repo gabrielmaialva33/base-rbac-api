@@ -24,13 +24,13 @@ export namespace IPermission {
 
     export type Store = {
       resource: string
-      action: ActionType
+      action: string
       operations: Array<string>
     }
 
     export type Edit = {
       resource?: string
-      action?: ActionType
+      action?: string
       operations?: Array<string>
     }
   }

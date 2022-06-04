@@ -12,7 +12,7 @@ export namespace RolesValidator {
         rules.maxLength(255),
       ]),
       is_active: schema.boolean.optional([]),
-      permissions_ids: schema
+      permissions: schema
         .array([rules.minLength(1)])
         .members(
           schema.string({ trim: true, escape: true }, [
@@ -37,6 +37,13 @@ export namespace RolesValidator {
         rules.maxLength(255),
       ]),
       is_active: schema.boolean.optional([]),
+      permissions: schema
+        .array([rules.minLength(1)])
+        .members(
+          schema.string({ trim: true, escape: true }, [
+            rules.exists({ table: 'permissions', column: 'id', whereNot: { is_deleted: true } }),
+          ])
+        ),
     })
 
     public messages = {}

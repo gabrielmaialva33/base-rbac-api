@@ -85,17 +85,15 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
     value: any,
     params?: ContextParams<Model>
   ): Promise<InstanceType<Model> | null> {
-    const model = this.orm.query()
-    model.where(key, value)
+    const model = this.orm.query().where(key, value)
 
     if (params) {
       const { clauses, orders, scopes } = params
 
       if (clauses)
         Object.entries(clauses).find(([key, value]: [string, any]) => {
-          if (key === 'where') {
-            if (value) model.where(value)
-          }
+          if (key === 'where') if (value) model.where(value)
+
           if (key === 'like') {
             const { column, match } = value
             if (column && match) model.where(column, 'LIKE', `%${match}%`)
@@ -104,10 +102,9 @@ export default class BaseRepository<Model extends LucidModel> implements IBaseRe
 
       if (scopes) model.withScopes(scopes)
 
-      if (orders) {
+      if (orders)
         for (const { column, direction } of orders)
           if (column) model.orderBy(String(column), direction ? direction : 'asc')
-      }
     }
 
     return model.first()

@@ -15,6 +15,12 @@ export const PermissionsDefault: Array<DefaultType> = [
     roleName: 'root',
   },
   {
+    resource: 'permissions',
+    action: 'ALLOW',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    roleName: 'root',
+  },
+  {
     resource: 'roles',
     action: 'ALLOW',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
